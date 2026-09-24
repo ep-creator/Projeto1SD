@@ -1,0 +1,14 @@
+|projeto
+F <= inst14.DB_MAX_OUTPUT_PORT_TYPE
+B[0] => inst12.IN0
+B[1] => inst11.IN0
+B[2] => inst10.IN0
+B[3] => inst9.IN0
+B[4] => inst.IN0
+A[0] => inst12.IN1
+A[1] => inst11.IN1
+A[2] => inst10.IN1
+A[3] => inst9.IN1
+A[4] => inst.IN1
+
+
