@@ -65,8 +65,51 @@ main (código final estável)
 
 ---
 
-## 🛠️ Boas Práticas de Contribuição
-1. Nunca submeter alterações diretamente na `develop` ou `main`.
-2. Trabalhar sempre no ramo `feat/...` respetivo da sua tarefa.
-3. Realizar testes funcionais através de simulação gráfica (*Waveform Vector File - .vwf*) antes de solicitar a integração.
-4. Ao concluir um bloco funcional, abrir um Pull Request para a `develop`.
+## 📁 Estrutura do Diretório
+
+O projeto é separado entre o código-fonte de hardware (`src/`) e a documentação analítica (`docs/`), assegurando que o projeto Quartus permaneça limpo, compilável e diretamente utilizável pelos avaliadores:
+
+```text
+Projeto1SD/
+├── .gitignore
+├── README.md
+│
+├── src/                          <-- Projeto Quartus (EP4CE115F29C7 / DE2-115)
+│   ├── Projeto1SD.qpf            <-- Arquivo de Projeto do Quartus
+│   ├── Projeto1SD.qsf            <-- Mapeamento de pinos da DE2-115
+│   ├── toplevel.bdf              <-- Esquemático Top-Level principal
+│   │
+│   ├── modules/                  <-- Esquemáticos (.bdf) e Símbolos (.bsf)
+│   │   ├── ula/                  <-- Submódulos da ULA
+│   │   │   ├── somador_subtrator.bdf
+│   │   │   ├── conv_c2.bdf
+│   │   │   ├── logica_and_xor.bdf
+│   │   │   ├── comparadores.bdf
+│   │   │   └── ula_top.bdf
+│   │   └── decodificadores/      <-- Displays de 7 segmentos
+│   │       ├── decod_bin_bcd.bdf
+│   │       ├── decod_7seg.bdf
+│   │       └── blanking_ctrl.bdf
+│   │
+│   └── simulation/               <-- Formas de onda (.vwf) exigidas
+│       ├── ula/
+│       │   ├── wf_somador_subtrator.vwf
+│       │   ├── wf_comparadores.vwf
+│       │   └── wf_logica.vwf
+│       ├── decodificadores/
+│       │   └── wf_decod_displays.vwf
+│       └── wf_toplevel_sistema.vwf
+│
+└── docs/                         <-- Base para o relatório impresso final
+    ├── relatorio_final.pdf       <-- Relatório formatado com itens (a) a (f)
+    ├── mapas_k/                  <-- Reduções e cálculos organizados por bloco
+    ├── tabelas_verdade/          <-- Tabelas de cada função lógica
+    └── figuras/                  <-- Capturas de circuitos e diagramas de blocos
+```
+
+## 📦 Instruções para Avaliação na Bancada
+
+1. Abra o Quartus Prime e carregue o arquivo de projeto localizado em `src/Projeto1SD.qpf`.
+2. Assegure que o dispositivo selecionado seja o FPGA **Cyclone IV EP4CE115F29C7**[cite: 1].
+3. Todas as atribuições de pinos para as chaves (`SW`), botões (`KEY`), displays (`HEX0`-`HEX7`) e LEDs (`LEDR`, `LEDG`) já estão definidas no arquivo `src/Projeto1SD.qsf`[cite: 1].
+4. Compile o projeto e realize a gravação via USB-Blaster diretamente na placa DE2-115[cite: 1].
