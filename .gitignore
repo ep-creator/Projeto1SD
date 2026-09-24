@@ -1,0 +1,13 @@
+# Quartus temporary and compilation files
+db/
+incremental_db/
+output_files/
+simulation/
+*.rpt
+*.chg
+*.htm
+*.eqn
+*.pin
+*.sof
+*.pof
+*.qws
