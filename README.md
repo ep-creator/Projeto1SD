@@ -67,44 +67,60 @@ main (código final estável)
 
 ## 📁 Estrutura do Diretório
 
-Regra central: **um bloco por pasta, e cada pasta é também um projeto Quartus de teste**. Assim qualquer bloco pode ser alterado, compilado e simulado sozinho, e os projetos de integração (`ula` e o top-level) usam exatamente os mesmos arquivos `.bdf`, sem cópias.
+Regras centrais: **cada bloco tem sua própria pasta, e cada pasta de bloco é também um projeto Quartus de teste**. Os blocos ficam agrupados por categoria para facilitar a localização. Qualquer bloco pode ser alterado, compilado e simulado sozinho, e os projetos de integração (`ula` e o top-level) usam exatamente os mesmos arquivos `.bdf`, sem cópias.
 
 ```text
 Projeto1SD/
 ├── README.md
 ├── .gitignore
-├── tools/
-│   ├── novo-bloco.ps1            <-- cria a pasta + projeto de teste de um bloco
-│   └── padronizar.ps1            <-- migração única para esta estrutura (já aplicada)
 │
 ├── src/
 │   ├── Projeto1SD.qpf / .qsf     <-- integração final + pinagem da DE2-115
 │   ├── toplevel.bdf              <-- ULA + decodificadores + LEDs
 │   ├── sim/toplevel.vwf          <-- waveform do sistema completo (relatório, item e)
 │   │
-│   └── modules/                  <-- um bloco por pasta
-│       ├── mux2x1/
-│       │   ├── mux2x1.bdf        <-- esquemático
-│       │   ├── mux2x1.bsf        <-- símbolo (File > Create/Update > Create Symbol Files)
-│       │   ├── mux2x1.qpf/.qsf   <-- projeto de teste (gerado pelo novo-bloco.ps1)
-│       │   └── sim/mux2x1.vwf    <-- waveform do bloco (relatório, item d)
-│       ├── inversor/             <-- C2 de 4 bits (inverte e soma 1)
-│       ├── comp2/                <-- sinal/magnitude -> C2 condicional (usa mux2x1, inversor)
-│       ├── comparador_igual/
-│       ├── ...                   <-- demais blocos (aritmética, lógica, displays)
-│       └── ula/                  <-- integra os blocos da ULA; testa a ULA sem a placa
+│   └── modules/
+│       ├── comum/                <-- blocos genéricos, reutilizados por várias categorias
+│       │   └── mux2x1/
+│       │       ├── mux2x1.bdf        <-- esquemático
+│       │       ├── mux2x1.bsf        <-- símbolo
+│       │       ├── mux2x1.qpf/.qsf   <-- projeto de teste do bloco
+│       │       └── sim/mux2x1.vwf    <-- waveform do bloco (relatório, item d)
+│       ├── c2/                   <-- complemento a 2
+│       │   ├── inversor/         <-- C2 de 4 bits (inverte e soma 1)
+│       │   └── comp2/            <-- sinal/magnitude -> C2 condicional
+│       ├── logica/               <-- AND e XOR bit a bit
+│       ├── comparadores/         <-- A = B, A > B, A < B
+│       │   └── comparador_igual/
+│       ├── aritmetica/           <-- somador/subtrator e conversões
+│       ├── selecao/              <-- MUX de saída controlado por S[2..0]
+│       ├── display/              <-- binário -> BCD, 7 segmentos, blanking
+│       └── integracao/
+│           └── ula/              <-- junta os blocos da ULA; testa a ULA sem a placa
 │
 └── docs/relatorio/               <-- base do relatório impresso (itens a–f)
 ```
+
+| Categoria | Branch responsável |
+| :--- | :--- |
+| `comum/` | quem precisar do bloco genérico (avisar o grupo) |
+| `c2/`, `logica/` | `feat/ula-logica-c2` |
+| `comparadores/` | `feat/ula-comparadores` |
+| `aritmetica/` | `feat/ula-aritmetica` |
+| `selecao/` | `feat/ula-mux-selecao` |
+| `display/` | `feat/decod-displays` |
+| `integracao/` | `feat/ula-integracao` |
+| `src/` (top-level e pinagem) | `feat/toplevel-pinagem` |
 
 ---
 
 ## 🧩 Convenções
 
-* **Nomes:** `snake_case` minúsculo. Pasta, `.bdf`, `.bsf`, `.qpf` e entidade têm **o mesmo nome** (no Quartus o nome da entidade de um `.bdf` é o nome do arquivo).
+* **Nomes:** `snake_case` minúsculo. Pasta do bloco, `.bdf`, `.bsf`, `.qpf` e entidade têm **o mesmo nome** (no Quartus o nome da entidade de um `.bdf` é o nome do arquivo). Não use nomes de primitivas do Quartus (`and`, `xor`, `not`...): por isso `op_and`, `op_xor`.
+* **Onde fica cada bloco:** na categoria da operação a que pertence. Se é genérico e usado por mais de uma categoria, vai para `comum/`.
 * **Interfaces em barramento:** vetores como `NOME[n..0]`, bit mais significativo à esquerda. Nos operandos e no resultado, **o bit de sinal é o MSB**: `A[4..0]`, `B[4..0]` (`A[4]` = sinal) e `F[5..0]` (`F[5]` = sinal). Seletor: `S[2..0]`. Sinais de 1 bit têm nome próprio em maiúsculas (`EQ`, `GT`, `LT`, `STATUS`).
 * **Extração de bits:** fio fino nomeado com o índice (`A[3]`) derivado do barramento, como em `comparador_igual.bdf`.
-* **Dependências:** um bloco que usa outros declara isso no próprio projeto (`SEARCH_PATH` no `.qsf`), via `novo-bloco.ps1 -Deps`. Nunca copie um `.bdf` para dentro de outra pasta.
+* **Dependências:** um bloco que usa outros declara as pastas deles como bibliotecas do próprio projeto (`SEARCH_PATH` no `.qsf`), incluindo as dependências das dependências. Nunca copie um `.bdf` para dentro de outra pasta.
 * **Simulações:** sempre em `<bloco>/sim/<bloco>.vwf`. A pasta `simulation/` é gerada pelo Quartus e fica fora do Git.
 * **Pinagem:** o `src/Projeto1SD.qsf` só é editado na branch `feat/toplevel-pinagem`.
 
@@ -112,36 +128,35 @@ Projeto1SD/
 
 ## 🧪 Como Trabalhar e Testar
 
-**Criar um bloco novo** (da raiz do repositório):
+**Criar um bloco novo:**
 
-```powershell
-powershell -ExecutionPolicy Bypass -File tools\novo-bloco.ps1 comparador_maior
-powershell -ExecutionPolicy Bypass -File tools\novo-bloco.ps1 somador5b -Deps somador_completo
+1. Crie a pasta `src/modules/<categoria>/<bloco>/` e, dentro dela, a pasta `sim/`.
+2. No Quartus: *File > New Project Wizard*. Diretório `src/modules/<categoria>/<bloco>`, nome do projeto e da entidade top-level `<bloco>`, família *Cyclone IV E*, dispositivo **EP4CE115F29C7**.
+3. Desenhe o esquemático e salve como `<bloco>.bdf` na mesma pasta. Adicione-o ao projeto (*Project > Add/Remove Files in Project*).
+4. Se o bloco usa outros: *Assignments > Settings > Libraries* e adicione em *Project libraries* as pastas `../../<categoria>/<dependência>` (e as dependências delas). Isso grava linhas `SEARCH_PATH` no `.qsf`. Exemplo do `comp2.qsf`:
+
+```tcl
+set_global_assignment -name TOP_LEVEL_ENTITY comp2
+set_global_assignment -name BDF_FILE comp2.bdf
+set_global_assignment -name SEARCH_PATH ../../c2/inversor
+set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
 ```
 
-Depois abra `src/modules/<bloco>/<bloco>.qpf` no Quartus, desenhe o `.bdf` com o mesmo nome e salve.
+5. Gere o símbolo: *File > Create/Update > Create Symbol Files for Current File*.
 
 **Testar um bloco isolado:**
 
-1. Abra `src/modules/<bloco>/<bloco>.qpf`.
+1. Abra `src/modules/<categoria>/<bloco>/<bloco>.qpf`.
 2. Compile (`Ctrl+L`) ou analise (`Ctrl+K`).
 3. *File > New > University Program VWF*, adicione os pinos (*Edit > Insert > Node Finder*), monte os estímulos e salve como `sim/<bloco>.vwf`.
 4. *Simulation > Run Functional Simulation*.
 
-**Testar em conjunto:** abra o projeto que integra (`ula` ou `src/Projeto1SD.qpf`). Ele enxerga as versões atuais dos blocos pelas dependências.
+**Testar em conjunto:** abra o projeto que integra (`ula` ou `src/Projeto1SD.qpf`). Ele enxerga as versões atuais dos blocos pelas bibliotecas (`SEARCH_PATH`).
 
 **Mudou a interface de um bloco** (pinos adicionados, renomeados ou removidos):
 
 1. No projeto do bloco: *File > Create/Update > Create Symbol Files for Current File*.
 2. Nos esquemáticos que usam o bloco: botão direito na instância > *Update Symbol or Block*.
-
-**Integrar o projeto `ula`** depois que os blocos existirem:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File tools\novo-bloco.ps1 ula -Deps comp2,comparador_igual -Forcar
-```
-
-(acrescente os demais blocos em `-Deps`; as dependências deles entram automaticamente).
 
 ---
 
@@ -158,4 +173,4 @@ powershell -ExecutionPolicy Bypass -File tools\novo-bloco.ps1 ula -Deps comp2,co
 2. Confirme que o dispositivo selecionado é o FPGA **Cyclone IV EP4CE115F29C7**.
 3. As atribuições de pinos das chaves (`SW`), displays (`HEX0`–`HEX7`) e LEDs (`LEDR`, `LEDG`) já estão definidas em `src/Projeto1SD.qsf`.
 4. Compile o projeto e grave na placa DE2-115 via USB-Blaster.
-5. Cada bloco pode ser inspecionado isoladamente abrindo `src/modules/<bloco>/<bloco>.qpf`.
+5. Cada bloco pode ser inspecionado isoladamente abrindo `src/modules/<categoria>/<bloco>/<bloco>.qpf`.
