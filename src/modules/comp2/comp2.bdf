@@ -246,7 +246,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 704 72 800 168)
-	(text "dmux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
+	(text "mux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
 	(text "inst1" (rect 8 75 30 92)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
@@ -282,7 +282,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 704 176 800 272)
-	(text "dmux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
+	(text "mux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
 	(text "inst2" (rect 8 75 30 92)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
@@ -318,7 +318,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 704 384 800 480)
-	(text "dmux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
+	(text "mux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
 	(text "inst3" (rect 8 75 30 92)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
@@ -354,7 +354,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 704 280 800 376)
-	(text "dmux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
+	(text "mux2x1" (rect 5 0 60 19)(font "Intel Clear" (font_size 8)))
 	(text "inst4" (rect 8 75 30 92)(font "Intel Clear" ))
 	(port
 		(pt 0 32)

@@ -1,13 +1,26 @@
-# Quartus temporary and compilation files
+# ---- Saidas geradas pelo Quartus (valem para qualquer pasta) ----
 db/
 incremental_db/
 output_files/
+greybox_tmp/
 simulation/
+*.qws
+*.qdf
+*.bak
 *.rpt
+*.summary
+*.smsg
+*.done
+*.jdi
+*.pin
+*.sld
+*.sof
+*.pof
 *.chg
 *.htm
 *.eqn
-*.pin
-*.sof
-*.pof
-*.qws
+
+# ---- Sistema / editor ----
+.vscode/
+Thumbs.db
+desktop.ini
