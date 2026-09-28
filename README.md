@@ -93,8 +93,9 @@ Projeto1SD/
 │       │   ├── op_and/
 │       │   └── op_xor/
 │       ├── comparadores/         <-- A = B, A > B, A < B
-│       │   ├── comparador_igual/
-│       │   └── decodificador_comparadores/  <-- decodifica S para os comparadores
+│       │   └── comparador_igual/
+│       ├── decodificadores/      <-- decodificam S[2..0] em sinais de controle
+│       │   └── decodificador_comparadores/  <-- S -> bits de seleção dos comparadores (F1, F2)
 │       ├── aritmetica/           <-- somador/subtrator e conversões
 │       ├── selecao/              <-- MUX de saída controlado por S[2..0]
 │       ├── display/              <-- binário -> BCD, 7 segmentos, blanking
@@ -109,6 +110,7 @@ Projeto1SD/
 | `comum/` | quem precisar do bloco genérico (avisar o grupo) |
 | `c2/`, `logica/` | `feat/ula-logica-c2` |
 | `comparadores/` | `feat/ula-comparadores` |
+| `decodificadores/` | `feat/ula-comparadores` |
 | `aritmetica/` | `feat/ula-aritmetica` |
 | `selecao/` | `feat/ula-mux-selecao` |
 | `display/` | `feat/decod-displays` |
@@ -163,10 +165,15 @@ set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
 
 ---
 
-## ❓ Decisões em Aberto
+## ✅ Decisões Tomadas
 
-* **Zero negativo:** em sinal/magnitude, `+0` (`00000`) e `−0` (`10000`) são o mesmo número. O `comparador_igual` atual trata os dois como diferentes, e o `comp2` converte `−0` em `10000`, que em C2 vale −16. Definir a regra e ajustar os blocos.
-* **Operação `010` (C2 de B):** o enunciado pede F "binário e não complementado a dois", mas também diz que os LEDs mostram o complemento 2. Confirmar com o monitor se F deve mostrar o padrão de bits do C2 de B ou o valor −B em sinal/magnitude.
+* **Zero negativo:** `+0` (`00000`) e `−0` (`10000`) são **iguais**. Blocos a conferir: `comparador_igual` (deve dar `1` para `00000` × `10000`), comparadores `>`/`<` (nenhum dos dois ativa nesse caso) e `comp2` (antes convertia `−0` em `10000`, que em C2 vale −16).
+* **Operação `010` (C2 de B):** F mostra o resultado obtido pelo bloco `comp2`: se B é positivo, sai igual a B; se B é negativo, sai o complemento a 2.
+
+## ⏳ Pendências (depois dos testes)
+
+* **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`), `comp2` (`SB, B0..B3` → `F0..F3, FS`) e `inversor` (`I0..I3` → `F0..F3`).
+* **Arquivos gerados após os testes individuais no Quartus:** `.bsf` de `op_and`, `op_xor` e `decodificador_comparadores`; waveforms `sim/op_and.vwf` e `sim/op_xor.vwf`.
 
 ---
 
