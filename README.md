@@ -90,8 +90,11 @@ Projeto1SD/
 │       │   ├── inversor/         <-- C2 de 4 bits (inverte e soma 1)
 │       │   └── comp2/            <-- sinal/magnitude -> C2 condicional
 │       ├── logica/               <-- AND e XOR bit a bit
+│       │   ├── op_and/
+│       │   └── op_xor/
 │       ├── comparadores/         <-- A = B, A > B, A < B
-│       │   └── comparador_igual/
+│       │   ├── comparador_igual/
+│       │   └── decodificador_comparadores/  <-- decodifica S para os comparadores
 │       ├── aritmetica/           <-- somador/subtrator e conversões
 │       ├── selecao/              <-- MUX de saída controlado por S[2..0]
 │       ├── display/              <-- binário -> BCD, 7 segmentos, blanking
