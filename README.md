@@ -81,11 +81,12 @@ Projeto1SD/
 │   │
 │   └── modules/
 │       ├── comum/                <-- blocos genéricos, reutilizados por várias categorias
-│       │   └── mux2x1/
-│       │       ├── mux2x1.bdf        <-- esquemático
-│       │       ├── mux2x1.bsf        <-- símbolo
-│       │       ├── mux2x1.qpf/.qsf   <-- projeto de teste do bloco
-│       │       └── sim/mux2x1.vwf    <-- waveform do bloco (relatório, item d)
+│       │   ├── mux2x1/
+│       │   │   ├── mux2x1.bdf        <-- esquemático
+│       │   │   ├── mux2x1.bsf        <-- símbolo
+│       │   │   ├── mux2x1.qpf/.qsf   <-- projeto de teste do bloco
+│       │   │   └── sim/mux2x1.vwf    <-- waveform do bloco (relatório, item d)
+│       │   └── mux4x1/           <-- MUX 4:1 de 1 bit
 │       ├── c2/                   <-- complemento a 2
 │       │   ├── inversor/         <-- C2 de 4 bits (inverte e soma 1)
 │       │   └── comp2/            <-- sinal/magnitude -> C2 condicional
@@ -93,11 +94,13 @@ Projeto1SD/
 │       │   ├── op_and/
 │       │   └── op_xor/
 │       ├── comparadores/         <-- A = B, A > B, A < B
-│       │   └── comparador_igual/
+│       │   ├── comparador_igual/
+│       │   └── mux_comparadores/ <-- escolhe EQ/GT/LT para o STATUS
 │       ├── decodificadores/      <-- decodificam S[2..0] em sinais de controle
 │       │   └── decodificador_comparadores/  <-- S -> bits de seleção dos comparadores (F1, F2)
 │       ├── aritmetica/           <-- somador/subtrator e conversões
 │       ├── selecao/              <-- MUX de saída controlado por S[2..0]
+│       │   └── mux_saida/        <-- MUX 4:1 de 6 bits (usa comum/mux4x1)
 │       ├── display/              <-- binário -> BCD, 7 segmentos, blanking
 │       └── integracao/
 │           └── ula/              <-- junta os blocos da ULA; testa a ULA sem a placa
@@ -173,7 +176,12 @@ set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
 ## ⏳ Pendências (depois dos testes)
 
 * **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`), `comp2` (`SB, B0..B3` → `F0..F3, FS`) e `inversor` (`I0..I3` → `F0..F3`).
-* **Arquivos gerados após os testes individuais no Quartus:** `.bsf` de `op_and`, `op_xor` e `decodificador_comparadores`; waveforms `sim/op_and.vwf` e `sim/op_xor.vwf`.
+* **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
+  * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
+  * `comp2`: com `SB = 1` e `B = 0000` (zero negativo) a saída é `10000`; pela decisão, deveria ser `00000`.
+  * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
+* **Blocos que faltam:** `comparador_maior` e `comparador_menor`; aritmética (somador/subtrator e conversões sinal/magnitude ↔ C2); decodificador de `S[2..0]` para o seletor de 2 bits do `mux_saida` (`00` soma/sub, `01` C2, `10` AND, `11` XOR); display (BCD, 7 segmentos, *blanking*); `integracao/ula`; top-level e pinagem.
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `comp2`, `mux4x1` e `mux_saida`; `.bsf` do `mux_saida`.
 
 ---
 
