@@ -1,46 +1,3 @@
-/*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off op_and -c op_and --vector_source="C:/Projeto1SD/src/modules/logica/op_and/sim/Waveform.vwf" --testbench_file="C:/Projeto1SD/src/modules/logica/op_and/simulation/qsim/Waveform.vwf.vt"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off op_and -c op_and --vector_source="C:/Projeto1SD/src/modules/logica/op_and/Waveform.vwf" --testbench_file="C:/Projeto1SD/src/modules/logica/op_and/simulation/qsim/Waveform.vwf.vt"</ttestbench_cmd>
-<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Projeto1SD/src/modules/logica/op_and/simulation/qsim/" op_and -c op_and</fnetlist_cmd>
-<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="C:/Projeto1SD/src/modules/logica/op_and/simulation/qsim/" op_and -c op_and</tnetlist_cmd>
-<modelsim_script>onerror {exit -code 1}
-vlib work
-vlog -work work op_and.vo
-vlog -work work Waveform.vwf.vt
-vsim -c -t 1ps -L cycloneive_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.op_and_vlg_vec_tst
-vcd file -direction op_and.msim.vcd
-vcd add -internal op_and_vlg_vec_tst/*
-vcd add -internal op_and_vlg_vec_tst/i1/*
-proc simTimestamp {} {
-    echo "Simulation time: $::now ps"
-    if { [string equal running [runStatus]] } {
-        after 2500 simTimestamp
-    }
-}
-after 2500 simTimestamp
-run -all
-quit -f
-</modelsim_script>
-<modelsim_script_timing>onerror {exit -code 1}
-vlib work
-vlog -work work op_and.vo
-vlog -work work Waveform.vwf.vt
-vsim -novopt -c -t 1ps -L cycloneive_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.op_and_vlg_vec_tst
-vcd file -direction op_and.msim.vcd
-vcd add -internal op_and_vlg_vec_tst/*
-vcd add -internal op_and_vlg_vec_tst/i1/*
-proc simTimestamp {} {
-    echo "Simulation time: $::now ps"
-    if { [string equal running [runStatus]] } {
-        after 2500 simTimestamp
-    }
-}
-after 2500 simTimestamp
-run -all
-quit -f
-</modelsim_script_timing>
-<hdl_lang>verilog</hdl_lang>
-</simulation_settings>*/
 /*
 WARNING: Do NOT edit the input and output ports in this file in a text
 editor if you plan to continue editing the block that represents it in
@@ -330,14 +287,13 @@ TRANSITION_LIST("B[3]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 20.0;
 		NODE
 		{
 			REPEAT = 3;
 			LEVEL 0 FOR 160.0;
 			LEVEL 1 FOR 160.0;
 		}
-		LEVEL 0 FOR 20.0;
+		LEVEL 0 FOR 40.0;
 	}
 }
 
@@ -346,14 +302,13 @@ TRANSITION_LIST("B[2]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 20.0;
 		NODE
 		{
 			REPEAT = 6;
 			LEVEL 0 FOR 80.0;
 			LEVEL 1 FOR 80.0;
 		}
-		LEVEL 0 FOR 20.0;
+		LEVEL 0 FOR 40.0;
 	}
 }
 
@@ -362,14 +317,13 @@ TRANSITION_LIST("B[1]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 20.0;
 		NODE
 		{
 			REPEAT = 12;
 			LEVEL 0 FOR 40.0;
 			LEVEL 1 FOR 40.0;
 		}
-		LEVEL 0 FOR 20.0;
+		LEVEL 0 FOR 40.0;
 	}
 }
 
@@ -381,8 +335,8 @@ TRANSITION_LIST("B[0]")
 		NODE
 		{
 			REPEAT = 25;
-			LEVEL 1 FOR 20.0;
 			LEVEL 0 FOR 20.0;
+			LEVEL 1 FOR 20.0;
 		}
 	}
 }
@@ -462,10 +416,11 @@ TRANSITION_LIST("SB")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 50;
-			LEVEL 0 FOR 10.0;
-			LEVEL 1 FOR 10.0;
+			REPEAT = 12;
+			LEVEL 0 FOR 40.0;
+			LEVEL 1 FOR 40.0;
 		}
+		LEVEL 0 FOR 40.0;
 	}
 }
 
