@@ -67,104 +67,131 @@ main (código final estável)
 
 ## 📁 Estrutura do Diretório
 
-Regras centrais: **cada bloco tem sua própria pasta, e cada pasta de bloco é também um projeto Quartus de teste**. Os blocos ficam agrupados por categoria para facilitar a localização. Qualquer bloco pode ser alterado, compilado e simulado sozinho, e os projetos de integração (`ula` e o top-level) usam exatamente os mesmos arquivos `.bdf`, sem cópias.
+Regra central: **cada bloco existe uma única vez, na biblioteca `lib/`**. Todo projeto Quartus (teste de um bloco, ULA, top-level ou um projeto novo de qualquer pessoa) aponta para `lib/` e usa esses mesmos arquivos. Nada é copiado. Por isso, alterar um bloco na biblioteca vale para todos os projetos que o usam.
 
 ```text
 Projeto1SD/
 ├── README.md
 ├── .gitignore
 │
-├── src/
-│   ├── Projeto1SD.qpf / .qsf     <-- integração final + pinagem da DE2-115
-│   ├── toplevel.bdf              <-- ULA + decodificadores + LEDs
-│   ├── sim/toplevel.vwf          <-- waveform do sistema completo (relatório, item e)
-│   │
-│   └── modules/
-│       ├── comum/                <-- blocos genéricos, reutilizados por várias categorias
-│       │   ├── mux2x1/
-│       │   │   ├── mux2x1.bdf        <-- esquemático
-│       │   │   ├── mux2x1.bsf        <-- símbolo
-│       │   │   ├── mux2x1.qpf/.qsf   <-- projeto de teste do bloco
-│       │   │   └── sim/mux2x1.vwf    <-- waveform do bloco (relatório, item d)
-│       │   └── mux4x1/           <-- MUX 4:1 de 1 bit
-│       ├── c2/                   <-- complemento a 2
-│       │   ├── inversor/         <-- C2 de 4 bits (inverte e soma 1)
-│       │   └── comp2/            <-- sinal/magnitude -> C2 condicional
-│       ├── logica/               <-- AND e XOR bit a bit
-│       │   ├── op_and/
-│       │   └── op_xor/
-│       ├── comparadores/         <-- A = B, A > B, A < B
-│       │   ├── comparador_igual/
-│       │   └── mux_comparadores/ <-- escolhe EQ/GT/LT para o STATUS
-│       ├── decodificadores/      <-- decodificam S[2..0] em sinais de controle
-│       │   └── decodificador_comparadores/  <-- S -> bits de seleção dos comparadores (F1, F2)
-│       ├── aritmetica/           <-- somador/subtrator e conversões
-│       ├── selecao/              <-- MUX de saída controlado por S[2..0]
-│       │   └── mux_saida/        <-- MUX 4:1 de 6 bits (usa comum/mux4x1)
-│       ├── display/              <-- binário -> BCD, 7 segmentos, blanking
-│       └── integracao/
-│           └── ula/              <-- junta os blocos da ULA; testa a ULA sem a placa
+├── lib/                          <-- A BIBLIOTECA: todos os blocos, numa pasta só
+│   ├── mux2x1.bdf                <-- circuito do bloco (a entidade)
+│   ├── mux2x1.bsf                <-- símbolo, usado para inserir o bloco em outros esquemáticos
+│   ├── comp2.bdf / comp2.bsf
+│   └── ...                       <-- só .bdf e .bsf aqui (nenhum projeto .qpf)
+│
+├── testes/                       <-- tabela verdade e simulação, uma pasta por bloco
+│   ├── mux2x1/
+│   │   ├── mux2x1.qpf / .qsf     <-- projeto de teste do bloco (usa ../../lib)
+│   │   ├── tabela_verdade.md     <-- tabela verdade (relatório)
+│   │   └── mux2x1.vwf            <-- simulação (relatório, item d)
+│   └── ...
+│
+├── src/                          <-- montagem final
+│   ├── Projeto1SD.qpf / .qsf     <-- top-level + pinagem da DE2-115 (usa ../lib)
+│   ├── toplevel.bdf              <-- ULA + decodificadores + LEDs (a fazer)
+│   └── toplevel.vwf              <-- simulação do sistema completo (relatório, item e)
 │
 └── docs/relatorio/               <-- base do relatório impresso (itens a–f)
 ```
 
+**Por que `lib/` não tem subpastas:** o Quartus não procura blocos dentro de subpastas de uma biblioteca. Com uma pasta só, qualquer projeto precisa de **uma única linha** (`SEARCH_PATH`) para enxergar todos os blocos, e um bloco novo fica disponível para todos assim que o `.bdf` e o `.bsf` são salvos em `lib/`. As categorias ficam no catálogo abaixo.
+
+### 📚 Catálogo da biblioteca
+
+| Bloco | Categoria | Função | Usa | Pendência |
+| :--- | :--- | :--- | :--- | :--- |
+| `mux2x1` | comum | MUX 2:1 de 1 bit | — | — |
+| `mux4x1` | comum | MUX 4:1 de 1 bit | — | — |
+| `inversor` | c2 | C2 de 4 bits (inverte e soma 1) | — | — |
+| `comp2` | c2 | Sinal/magnitude → C2 condicional | `inversor`, `mux2x1` | zero negativo |
+| `op_and` | lógica | AND bit a bit | — | `F[4]`/`F[5]` trocados |
+| `op_xor` | lógica | XOR bit a bit | — | `F[4]`/`F[5]` trocados |
+| `comparador_igual` | comparadores | $A = B$ | — | — |
+| `mux_comparadores` | comparadores | Escolhe EQ/GT/LT para o `STATUS` | — | — |
+| `decodificador_comparadores` | decodificadores | `S` → bits de seleção dos comparadores (`F1`, `F2`) | — | — |
+| `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
+
+Detalhes das pendências em [⏳ Pendências](#-pendências-depois-dos-testes).
+
 | Categoria | Branch responsável |
 | :--- | :--- |
-| `comum/` | quem precisar do bloco genérico (avisar o grupo) |
-| `c2/`, `logica/` | `feat/ula-logica-c2` |
-| `comparadores/` | `feat/ula-comparadores` |
-| `decodificadores/` | `feat/ula-comparadores` |
-| `aritmetica/` | `feat/ula-aritmetica` |
-| `selecao/` | `feat/ula-mux-selecao` |
-| `display/` | `feat/decod-displays` |
-| `integracao/` | `feat/ula-integracao` |
+| comum | quem precisar do bloco genérico (avisar o grupo) |
+| c2, lógica | `feat/ula-logica-c2` |
+| comparadores, decodificadores | `feat/ula-comparadores` |
+| aritmética | `feat/ula-aritmetica` |
+| seleção | `feat/ula-mux-selecao` |
+| display | `feat/decod-displays` |
+| integração (`ula`) | `feat/ula-integracao` |
 | `src/` (top-level e pinagem) | `feat/toplevel-pinagem` |
 
 ---
 
 ## 🧩 Convenções
 
-* **Nomes:** `snake_case` minúsculo. Pasta do bloco, `.bdf`, `.bsf`, `.qpf` e entidade têm **o mesmo nome** (no Quartus o nome da entidade de um `.bdf` é o nome do arquivo). Não use nomes de primitivas do Quartus (`and`, `xor`, `not`...): por isso `op_and`, `op_xor`.
-* **Onde fica cada bloco:** na categoria da operação a que pertence. Se é genérico e usado por mais de uma categoria, vai para `comum/`.
+* **Nomes:** `snake_case` minúsculo, **únicos na biblioteca**. O `.bdf`, o `.bsf`, a entidade e a pasta de teste têm **o mesmo nome** (no Quartus o nome da entidade de um `.bdf` é o nome do arquivo). Não use nomes de primitivas do Quartus (`and`, `xor`, `not`...): por isso `op_and`, `op_xor`.
 * **Interfaces em barramento:** vetores como `NOME[n..0]`, bit mais significativo à esquerda. Nos operandos e no resultado, **o bit de sinal é o MSB**: `A[4..0]`, `B[4..0]` (`A[4]` = sinal) e `F[5..0]` (`F[5]` = sinal). Seletor: `S[2..0]`. Sinais de 1 bit têm nome próprio em maiúsculas (`EQ`, `GT`, `LT`, `STATUS`).
 * **Extração de bits:** fio fino nomeado com o índice (`A[3]`) derivado do barramento, como em `comparador_igual.bdf`.
-* **Dependências:** um bloco que usa outros declara as pastas deles como bibliotecas do próprio projeto (`SEARCH_PATH` no `.qsf`), incluindo as dependências das dependências. Nunca copie um `.bdf` para dentro de outra pasta.
-* **Simulações:** sempre em `<bloco>/sim/<bloco>.vwf`. A pasta `simulation/` é gerada pelo Quartus e fica fora do Git.
-* **Pinagem:** o `src/Projeto1SD.qsf` só é editado na branch `feat/toplevel-pinagem`.
+* **Biblioteca:** `lib/` guarda só `.bdf` e `.bsf`. Nunca copie um bloco para dentro de outra pasta nem crie um projeto `.qpf` em `lib/`.
+* **Caminhos sempre relativos:** `../lib` (em `src/`) ou `../../lib` (em `testes/<bloco>/`). Um caminho absoluto (`C:\...`) só funciona no computador de quem o criou.
+* **Testes:** `testes/<bloco>/` guarda o projeto de teste, a `tabela_verdade.md` e a simulação `<bloco>.vwf`. A pasta `simulation/` é gerada pelo Quartus e fica fora do Git.
+* **Pinagem:** o `src/Projeto1SD.qsf` só recebe pinagem na branch `feat/toplevel-pinagem`.
 
 ---
 
-## 🧪 Como Trabalhar e Testar
+## 🧪 Como Usar a Biblioteca
 
-**Criar um bloco novo:**
+### Usar os blocos num projeto (qualquer computador)
 
-1. Crie a pasta `src/modules/<categoria>/<bloco>/` e, dentro dela, a pasta `sim/`.
-2. No Quartus: *File > New Project Wizard*. Diretório `src/modules/<categoria>/<bloco>`, nome do projeto e da entidade top-level `<bloco>`, família *Cyclone IV E*, dispositivo **EP4CE115F29C7**.
-3. Desenhe o esquemático e salve como `<bloco>.bdf` na mesma pasta. Adicione-o ao projeto (*Project > Add/Remove Files in Project*).
-4. Se o bloco usa outros: *Assignments > Settings > Libraries* e adicione em *Project libraries* as pastas `../../<categoria>/<dependência>` (e as dependências delas). Isso grava linhas `SEARCH_PATH` no `.qsf`. Exemplo do `comp2.qsf`:
+1. Clone o repositório. A biblioteca vem junto, em `lib/`; não há nada para instalar.
+2. Crie ou abra o projeto **dentro do repositório** (por exemplo, em `src/` ou em `testes/<bloco>/`).
+3. *Assignments > Settings > Libraries*, em **Project libraries**, adicione o caminho relativo até `lib` (`../lib` ou `../../lib`) e clique em *Add*. Isso grava uma linha no `.qsf`:
+
+```tcl
+set_global_assignment -name SEARCH_PATH ../lib
+```
+
+4. No esquemático, abra a *Symbol Tool* (duplo clique na área vazia). A pasta `lib` aparece na lista de bibliotecas, junto das nativas do Quartus. Escolha o bloco e insira.
+5. Para ver o funcionamento interno de um bloco, dê duplo clique na instância, ou veja a árvore em *Project Navigator > Hierarchy*.
+
+Se aparecer *"entity ... is undefined"*, o projeto não está enxergando `lib/`: confira o caminho no passo 3 e se o `.bdf` do bloco está em `lib/`.
+
+### Alterar um bloco da biblioteca
+
+Os blocos não ficam travados: o arquivo em `lib/` é o próprio circuito.
+
+1. Abra `testes/<bloco>/<bloco>.qpf`. O esquemático aberto é `lib/<bloco>.bdf`.
+2. Faça a alteração e salve (`Ctrl+S`). O arquivo de `lib/` é atualizado, e todos os projetos passam a usar a versão nova na próxima compilação.
+3. Compile e rode a simulação `testes/<bloco>/<bloco>.vwf` de novo; atualize a `tabela_verdade.md` se o comportamento mudou.
+4. **Se mudou algum pino** (adicionou, removeu ou renomeou):
+   1. *File > Create/Update > Create Symbol Files for Current File*, salvando por cima de `lib/<bloco>.bsf`.
+   2. Em cada esquemático que usa o bloco: botão direito na instância > *Update Symbol or Block*.
+5. Faça o commit na branch da categoria. Avise o grupo quando alterar bloco de outra pessoa, porque a mudança vale para todos.
+
+### Adicionar um bloco novo à biblioteca
+
+1. Crie a pasta `testes/<bloco>/`.
+2. *File > New Project Wizard*: diretório `testes/<bloco>`, nome do projeto e entidade top-level `<bloco>`, família *Cyclone IV E*, dispositivo **EP4CE115F29C7**.
+3. *Assignments > Settings > Libraries* e adicione `../../lib` em *Project libraries*. Assim o bloco novo já pode usar os outros blocos da biblioteca.
+4. *File > New > Block Diagram/Schematic File*, desenhe e salve com *File > Save As* **dentro de `lib/`**, como `<bloco>.bdf`, com *Add file to current project* marcado.
+5. Gere o símbolo: *File > Create/Update > Create Symbol Files for Current File*. Confira que `<bloco>.bsf` ficou em `lib/`.
+6. Copie `tabela_verdade.md` de outro bloco para `testes/<bloco>/` e adapte; salve a simulação como `testes/<bloco>/<bloco>.vwf`.
+7. Acrescente o bloco no [catálogo](#-catálogo-da-biblioteca).
+
+O `.qsf` do teste fica assim (exemplo do `comp2`):
 
 ```tcl
 set_global_assignment -name TOP_LEVEL_ENTITY comp2
-set_global_assignment -name BDF_FILE comp2.bdf
-set_global_assignment -name SEARCH_PATH ../../c2/inversor
-set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
+set_global_assignment -name BDF_FILE ../../lib/comp2.bdf
+set_global_assignment -name SEARCH_PATH ../../lib
 ```
 
-5. Gere o símbolo: *File > Create/Update > Create Symbol Files for Current File*.
+### Testar um bloco isolado
 
-**Testar um bloco isolado:**
-
-1. Abra `src/modules/<categoria>/<bloco>/<bloco>.qpf`.
+1. Abra `testes/<bloco>/<bloco>.qpf`.
 2. Compile (`Ctrl+L`) ou analise (`Ctrl+K`).
-3. *File > New > University Program VWF*, adicione os pinos (*Edit > Insert > Node Finder*), monte os estímulos e salve como `sim/<bloco>.vwf`.
+3. Abra `<bloco>.vwf` da mesma pasta, ou crie com *File > New > University Program VWF*, adicione os pinos (*Edit > Insert > Node Finder*) e salve em `testes/<bloco>/`.
 4. *Simulation > Run Functional Simulation*.
-
-**Testar em conjunto:** abra o projeto que integra (`ula` ou `src/Projeto1SD.qpf`). Ele enxerga as versões atuais dos blocos pelas bibliotecas (`SEARCH_PATH`).
-
-**Mudou a interface de um bloco** (pinos adicionados, renomeados ou removidos):
-
-1. No projeto do bloco: *File > Create/Update > Create Symbol Files for Current File*.
-2. Nos esquemáticos que usam o bloco: botão direito na instância > *Update Symbol or Block*.
 
 ---
 
@@ -180,8 +207,8 @@ set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
   * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
   * `comp2`: com `SB = 1` e `B = 0000` (zero negativo) a saída é `10000`; pela decisão, deveria ser `00000`.
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-* **Blocos que faltam:** `comparador_maior` e `comparador_menor`; aritmética (somador/subtrator e conversões sinal/magnitude ↔ C2); decodificador de `S[2..0]` para o seletor de 2 bits do `mux_saida` (`00` soma/sub, `01` C2, `10` AND, `11` XOR); display (BCD, 7 segmentos, *blanking*); `integracao/ula`; top-level e pinagem.
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `comp2`, `mux4x1` e `mux_saida`; `.bsf` do `mux_saida`.
+* **Blocos que faltam:** `comparador_maior` e `comparador_menor`; aritmética (somador/subtrator e conversões sinal/magnitude ↔ C2); decodificador de `S[2..0]` para o seletor de 2 bits do `mux_saida` (`00` soma/sub, `01` C2, `10` AND, `11` XOR); display (BCD, 7 segmentos, *blanking*); `ula`; top-level e pinagem.
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `comp2`, `mux4x1` e `mux_saida`; `.bsf` do `mux_saida` (abrir `testes/mux_saida/mux_saida.qpf` e gerar em `lib/`).
 
 ---
 
@@ -191,4 +218,4 @@ set_global_assignment -name SEARCH_PATH ../../comum/mux2x1
 2. Confirme que o dispositivo selecionado é o FPGA **Cyclone IV EP4CE115F29C7**.
 3. As atribuições de pinos das chaves (`SW`), displays (`HEX0`–`HEX7`) e LEDs (`LEDR`, `LEDG`) já estão definidas em `src/Projeto1SD.qsf`.
 4. Compile o projeto e grave na placa DE2-115 via USB-Blaster.
-5. Cada bloco pode ser inspecionado isoladamente abrindo `src/modules/<categoria>/<bloco>/<bloco>.qpf`.
+5. Cada bloco pode ser inspecionado isoladamente abrindo `testes/<bloco>/<bloco>.qpf`.
