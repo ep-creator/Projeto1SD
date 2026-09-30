@@ -105,7 +105,7 @@ Projeto1SD/
 | `mux2x1` | comum | MUX 2:1 de 1 bit | — | — |
 | `mux4x1` | comum | MUX 4:1 de 1 bit | — | — |
 | `inversor` | c2 | C2 de 4 bits (inverte e soma 1) | — | — |
-| `comp2` | c2 | Sinal/magnitude → C2 condicional | `inversor`, `mux2x1` | zero negativo |
+| `comp2` | c2 | Sinal/magnitude → C2 condicional (`I[3..0]`, `IS` → `O[3..0]`, `OS`) | `inversor`, `mux2x1` | — |
 | `op_and` | lógica | AND bit a bit | — | `F[4]`/`F[5]` trocados |
 | `op_xor` | lógica | XOR bit a bit | — | `F[4]`/`F[5]` trocados |
 | `comparador_igual` | comparadores | $A = B$ | — | — |
@@ -113,10 +113,13 @@ Projeto1SD/
 | `decodificador_comparadores` | decodificadores | `S` → bits de seleção dos comparadores (`F1`, `F2`) | — | — |
 | `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
 | `somador_completo` | aritmética | Somador completo de 1 bit | — | — |
+| `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | — |
 | `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
 | `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
-| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | valor 9 |
+| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | — |
 | `decod7seg_f_dezena` | display | Magnitude 0–30 → dezena em 7 segmentos | — | — |
+| `decod7seg_f_unidade` | display | Magnitude 0–30 → unidade em 7 segmentos | — | simulação só com `gUNI` |
+| `decod7seg_f` | display | \|F\| nos dois displays (`S[4..0]`, `sinal_S` → segmentos DEZ/UNI, `led_negativo`) | `decod7seg_f_dezena`, `decod7seg_f_unidade` | falta `.bsf` |
 
 Detalhes das pendências em [⏳ Pendências](#-pendências-depois-dos-testes). O andamento bloco a bloco está no [CHECKLIST.md](CHECKLIST.md).
 
@@ -208,14 +211,12 @@ set_global_assignment -name SEARCH_PATH ../../lib
 
 ## ⏳ Pendências (depois dos testes)
 
-* **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`), `comp2` (`SB, B0..B3` → `F0..F3, FS`) e `inversor` (`I0..I3` → `F0..F3`).
+* **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`) e `inversor` (`I0..I3` → `F0..F3`).
 * **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
   * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
-  * `comp2`: com `SB = 1` e `B = 0000` (zero negativo) a saída é `10000`; pela decisão, deveria ser `00000`.
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-  * `decod7seg_ab_unidade`: pela leitura do esquemático, o valor 9 acende como 5 (termo `D·C'·B'·A` em `bu_seg` apaga o segmento b). Conferir na simulação.
-* **Blocos que faltam:** `somador6`, `inversor5`, `c2_para_sm`, `somador_subtrator`, `comparador_maior`, `decod7seg_f_unidade` (citado no projeto do colega, mas o arquivo não veio), `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `comp2`, `mux4x1` e `mux_saida`; `.bsf` do `mux_saida` (abrir `testes/mux_saida/mux_saida.qpf` e gerar em `lib/`).
+* **Blocos que faltam:** `inversor5`, `c2_para_sm`, `somador_subtrator`, `comparador_maior`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `mux_saida` e do `decod7seg_f` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
 
 ---
 

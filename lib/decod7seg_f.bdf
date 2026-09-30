@@ -294,7 +294,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 568 40 664 200)
-	(text "decod7segDezena" (rect 5 0 113 19)(font "Intel Clear" (font_size 8)))
+	(text "decod7seg_f_dezena" (rect 5 0 113 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
@@ -386,7 +386,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (symbol
 	(rect 568 232 664 392)
-	(text "decod7segUnidade" (rect 5 0 120 19)(font "Intel Clear" (font_size 8)))
+	(text "decod7seg_f_unidade" (rect 5 0 120 19)(font "Intel Clear" (font_size 8)))
 	(text "inst1" (rect 8 139 30 156)(font "Intel Clear" ))
 	(port
 		(pt 0 32)

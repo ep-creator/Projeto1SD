@@ -36,18 +36,20 @@ toplevel ─────────────────── chaves, LEDs 
 Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta para sinal-magnitude.
 
 - [ ] 🔴 **`somador_subtrator`**: bloco que junta os itens abaixo (`SUB = S[0]`)
-  - [ ] 🟡 **`comp2`** ×2 (A e B), sinal-magnitude → C2
+  - [ ] 🟢 **`comp2`** ×2 (A e B), sinal-magnitude → C2 (`I[3..0]`, `IS` → `O[3..0]`, `OS`)
     - [x] na biblioteca
-    - [ ] corrigir o zero negativo: hoje `−0` sai `10000` (= −16 em C2 e estraga a soma); correção `FS = SB AND (B≠0)` (bloco do Enzo)
-    - [ ] tabela verdade + simulação
+    - [x] corrigir o zero negativo: `−0` agora sai `+0` (bloco do Enzo)
+    - [x] simulação (`testes/comp2/comp2.vwf`)
+    - [ ] tabela verdade
   - [ ] 🔌 inverter o sinal de B na subtração: `SB' = SB XOR SUB`
   - [ ] 🟢 **`somador_completo`**, 1 bit (`A`, `B`, `Cin` → `S`, `Cout`)
     - [x] na biblioteca (enviado pelo grupo como `soma1`)
     - [ ] compilar `testes/somador_completo`
     - [ ] tabela verdade + simulação
-  - [ ] 🔴 **`somador6`**: 6× `somador_completo`; estende o sinal de 5 para 6 bits repetindo o bit 4
-    - [ ] criar na biblioteca
-    - [ ] tabela verdade + simulação
+  - [ ] 🟢 **`somador6`**: 6× `somador_completo`; estende o sinal de 5 para 6 bits repetindo o bit 4
+    - [x] criar na biblioteca
+    - [x] simulação (`testes/somador6/somador6.vwf`)
+    - [ ] tabela verdade
   - [ ] 🔴 **`c2_para_sm`**: resultado em C2 (6 bits) → sinal-magnitude (`F[5]` = sinal, `F[4..0]` = magnitude até 30)
     - [ ] 🔴 **`inversor5`**: C2 de 5 bits (o `inversor` atual só tem 4, e a magnitude chega a 30)
     - [ ] 🟢 `mux2x1` ×5: escolhe entre o valor direto e o invertido, com seletor = bit de sinal
@@ -58,8 +60,8 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
 
 ## 2. Complemento a 2 de B (`010`)
 
-- [ ] 🟡 **`comp2`**: é o mesmo bloco do item 1 (a correção do −0 vale para os dois)
-- [ ] 🔌 saída em 6 bits na `ula`: `F = {FS, FS, F3, F2, F1, F0}` (sinal repetido no bit 5)
+- [ ] 🟢 **`comp2`**: é o mesmo bloco do item 1 (a correção do −0 vale para os dois)
+- [ ] 🔌 saída em 6 bits na `ula`: `F = {OS, OS, O[3], O[2], O[1], O[0]}` (sinal repetido no bit 5)
 
 ---
 
@@ -129,17 +131,22 @@ Os decodificadores vão direto do binário para os segmentos, sem passar por BCD
   - [x] na biblioteca (enviado pelo grupo como `decodificadores`)
   - [ ] compilar `testes/decod7seg_ab_dezena`
   - [ ] tabela verdade + simulação
-- [ ] 🟡 **`decod7seg_ab_unidade`**: magnitude 0–15 → dígito da unidade, ×2 (A e B)
+- [ ] 🟢 **`decod7seg_ab_unidade`**: magnitude 0–15 → dígito da unidade, ×2 (A e B)
   - [x] na biblioteca (enviado pelo grupo como `Block4`)
-  - [ ] conferir o valor 9: pela leitura do esquemático, o segmento b apaga e aparece **5** (termo `D·C'·B'·A` em `bu_seg`); corrigir, feito pelo autor
+  - [x] corrigir o valor 9 (segmento b apagado)
   - [ ] tabela verdade + simulação
 - [ ] 🟢 **`decod7seg_f_dezena`**: magnitude de F, 0–30 → dezena (`0` a `3`)
   - [x] na biblioteca (enviado pelo grupo como `decod7segDezena`)
   - [ ] compilar `testes/decod7seg_f_dezena` e rodar a simulação que veio junto
   - [ ] tabela verdade
-- [ ] 🔴 **`decod7seg_f_unidade`**: magnitude de F, 0–30 → unidade
-  - [ ] pedir ao colega: o projeto dele cita `decod7segUnidade.bdf`, mas o arquivo não veio no zip
-  - [ ] colocar na biblioteca
+- [ ] 🟢 **`decod7seg_f_unidade`**: magnitude de F, 0–30 → unidade
+  - [x] pedir ao colega (veio no GitHub como `decod7segUNI/decod7segUnidade`)
+  - [x] colocar na biblioteca
+  - [ ] compilar `testes/decod7seg_f_unidade` e rodar a simulação que veio junto (só tem `gUNI`; acrescentar `aUNI` … `fUNI`)
+  - [ ] tabela verdade
+- [ ] 🟢 **`decod7seg_f`**: junta `decod7seg_f_dezena` + `decod7seg_f_unidade` (entradas `S[4..0]`, `sinal_S`; saída extra `led_negativo`)
+  - [x] na biblioteca (enviado pelo grupo como `decod7Saida/decod7segSaida`)
+  - [ ] compilar `testes/decod7seg_f` e gerar `lib/decod7seg_f.bsf`
   - [ ] tabela verdade + simulação
 - [ ] 🔴 **`apaga_display`**: 7 portas OR (`seg = seg OR BLANK`); ×2, nos displays de F, com `BLANK = NOT DISP_EN`
   - [ ] criar na biblioteca
