@@ -1791,19 +1791,11 @@ https://fpgasoftware.intel.com/eula.
 	(pt 72 328)
 )
 (connector
-	(pt 72 352)
-	(pt 72 328)
-)
-(connector
 	(pt 208 304)
 	(pt 208 328)
 )
 (connector
 	(pt 208 328)
-	(pt 160 328)
-)
-(connector
-	(pt 160 352)
 	(pt 160 328)
 )
 (connector
@@ -1815,10 +1807,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 248 328)
 )
 (connector
-	(pt 248 352)
-	(pt 248 328)
-)
-(connector
 	(pt 384 304)
 	(pt 384 328)
 )
@@ -1827,15 +1815,7 @@ https://fpgasoftware.intel.com/eula.
 	(pt 336 328)
 )
 (connector
-	(pt 336 352)
-	(pt 336 328)
-)
-(connector
 	(pt 536 224)
-	(pt 112 224)
-)
-(connector
-	(pt 112 256)
 	(pt 112 224)
 )
 (connector
@@ -1843,15 +1823,7 @@ https://fpgasoftware.intel.com/eula.
 	(pt 208 208)
 )
 (connector
-	(pt 208 256)
-	(pt 208 208)
-)
-(connector
 	(pt 536 192)
-	(pt 288 192)
-)
-(connector
-	(pt 288 256)
 	(pt 288 192)
 )
 (connector
@@ -1859,15 +1831,7 @@ https://fpgasoftware.intel.com/eula.
 	(pt 336 176)
 )
 (connector
-	(pt 336 328)
-	(pt 336 176)
-)
-(connector
 	(pt 536 120)
-	(pt 112 120)
-)
-(connector
-	(pt 112 224)
 	(pt 112 120)
 )
 (connector
@@ -1875,23 +1839,11 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 104)
 )
 (connector
-	(pt 160 328)
-	(pt 160 104)
-)
-(connector
 	(pt 536 88)
 	(pt 288 88)
 )
 (connector
-	(pt 288 88)
-	(pt 288 192)
-)
-(connector
 	(pt 536 72)
-	(pt 384 72)
-)
-(connector
-	(pt 384 256)
 	(pt 384 72)
 )
 (connector
@@ -1899,15 +1851,7 @@ https://fpgasoftware.intel.com/eula.
 	(pt 72 32)
 )
 (connector
-	(pt 72 328)
-	(pt 72 32)
-)
-(connector
 	(pt 536 16)
-	(pt 208 16)
-)
-(connector
-	(pt 208 208)
 	(pt 208 16)
 )
 (connector
@@ -1915,15 +1859,7 @@ https://fpgasoftware.intel.com/eula.
 	(pt 248 0)
 )
 (connector
-	(pt 248 328)
-	(pt 248 0)
-)
-(connector
 	(pt 536 -64)
-	(pt 72 -64)
-)
-(connector
-	(pt 72 32)
 	(pt 72 -64)
 )
 (connector
@@ -1931,32 +1867,16 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 -80)
 )
 (connector
-	(pt 160 -80)
-	(pt 160 104)
-)
-(connector
 	(pt 536 -96)
 	(pt 248 -96)
-)
-(connector
-	(pt 248 -96)
-	(pt 248 0)
 )
 (connector
 	(pt 536 -112)
 	(pt 384 -112)
 )
 (connector
-	(pt 384 -112)
-	(pt 384 72)
-)
-(connector
 	(pt 536 -16)
 	(pt 336 -16)
-)
-(connector
-	(pt 336 -16)
-	(pt 336 176)
 )
 (connector
 	(pt 600 200)
@@ -2067,71 +1987,35 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -184)
 )
 (connector
-	(pt 112 120)
-	(pt 112 -184)
-)
-(connector
 	(pt 536 -200)
 	(pt 160 -200)
-)
-(connector
-	(pt 160 -200)
-	(pt 160 -80)
 )
 (connector
 	(pt 536 -216)
 	(pt 288 -216)
 )
 (connector
-	(pt 288 -216)
-	(pt 288 88)
-)
-(connector
 	(pt 536 -232)
 	(pt 336 -232)
-)
-(connector
-	(pt 336 -232)
-	(pt 336 -16)
 )
 (connector
 	(pt 536 -280)
 	(pt 112 -280)
 )
 (connector
-	(pt 112 -280)
-	(pt 112 -184)
-)
-(connector
 	(pt 536 -296)
 	(pt 160 -296)
-)
-(connector
-	(pt 160 -296)
-	(pt 160 -200)
 )
 (connector
 	(pt 536 -312)
 	(pt 248 -312)
 )
 (connector
-	(pt 248 -312)
-	(pt 248 -96)
-)
-(connector
 	(pt 536 -328)
 	(pt 384 -328)
 )
 (connector
-	(pt 384 -328)
-	(pt 384 -112)
-)
-(connector
 	(pt 536 -368)
-	(pt 72 -368)
-)
-(connector
-	(pt 72 -64)
 	(pt 72 -368)
 )
 (connector
@@ -2139,56 +2023,28 @@ https://fpgasoftware.intel.com/eula.
 	(pt 208 -384)
 )
 (connector
-	(pt 208 16)
-	(pt 208 -384)
-)
-(connector
 	(pt 536 -400)
 	(pt 288 -400)
-)
-(connector
-	(pt 288 -400)
-	(pt 288 -216)
 )
 (connector
 	(pt 536 -416)
 	(pt 336 -416)
 )
 (connector
-	(pt 336 -416)
-	(pt 336 -232)
-)
-(connector
 	(pt 536 -456)
 	(pt 72 -456)
-)
-(connector
-	(pt 72 -456)
-	(pt 72 -368)
 )
 (connector
 	(pt 536 -472)
 	(pt 160 -472)
 )
 (connector
-	(pt 160 -472)
-	(pt 160 -296)
-)
-(connector
 	(pt 536 -488)
 	(pt 248 -488)
 )
 (connector
-	(pt 248 -488)
-	(pt 248 -312)
-)
-(connector
 	(pt 536 -504)
 	(pt 336 -504)
-)
-(connector
-	(pt 336 -504)
-	(pt 336 -416)
 )
 (connector
 	(pt 696 -624)
@@ -2209,22 +2065,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 696 -624)
 	(pt 696 -576)
-)
-(connector
-	(pt 384 -600)
-	(pt 384 -328)
-)
-(connector
-	(pt 248 -584)
-	(pt 248 -488)
-)
-(connector
-	(pt 208 -568)
-	(pt 208 -384)
-)
-(connector
-	(pt 112 -552)
-	(pt 112 -280)
 )
 (connector
 	(pt 384 -600)
@@ -2255,32 +2095,16 @@ https://fpgasoftware.intel.com/eula.
 	(pt 72 -656)
 )
 (connector
-	(pt 72 -656)
-	(pt 72 -456)
-)
-(connector
 	(pt 552 -672)
 	(pt 160 -672)
-)
-(connector
-	(pt 160 -672)
-	(pt 160 -472)
 )
 (connector
 	(pt 552 -688)
 	(pt 288 -688)
 )
 (connector
-	(pt 288 -688)
-	(pt 288 -400)
-)
-(connector
 	(pt 552 -704)
 	(pt 384 -704)
-)
-(connector
-	(pt 384 -704)
-	(pt 384 -600)
 )
 (connector
 	(pt 616 -776)
@@ -2335,48 +2159,24 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -752)
 )
 (connector
-	(pt 112 -752)
-	(pt 112 -552)
-)
-(connector
 	(pt 552 -768)
 	(pt 208 -768)
-)
-(connector
-	(pt 208 -768)
-	(pt 208 -568)
 )
 (connector
 	(pt 552 -784)
 	(pt 288 -784)
 )
 (connector
-	(pt 288 -784)
-	(pt 288 -688)
-)
-(connector
 	(pt 552 -800)
 	(pt 336 -800)
-)
-(connector
-	(pt 336 -800)
-	(pt 336 -504)
 )
 (connector
 	(pt 552 -840)
 	(pt 112 -840)
 )
 (connector
-	(pt 112 -840)
-	(pt 112 -752)
-)
-(connector
 	(pt 552 -856)
 	(pt 160 -856)
-)
-(connector
-	(pt 160 -856)
-	(pt 160 -672)
 )
 (connector
 	(pt 552 -872)
@@ -2387,10 +2187,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 384 -888)
 )
 (connector
-	(pt 384 -888)
-	(pt 384 -704)
-)
-(connector
 	(pt 552 -936)
 	(pt 112 -936)
 )
@@ -2399,24 +2195,12 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 -952)
 )
 (connector
-	(pt 160 -952)
-	(pt 160 -856)
-)
-(connector
 	(pt 552 -968)
 	(pt 248 -968)
 )
 (connector
-	(pt 248 -968)
-	(pt 248 -584)
-)
-(connector
 	(pt 552 -984)
 	(pt 336 -984)
-)
-(connector
-	(pt 336 -984)
-	(pt 336 -800)
 )
 (connector
 	(pt 552 -1040)
@@ -2427,20 +2211,12 @@ https://fpgasoftware.intel.com/eula.
 	(pt 248 -1056)
 )
 (connector
-	(pt 248 -1056)
-	(pt 248 -968)
-)
-(connector
 	(pt 552 -1072)
 	(pt 336 -1072)
 )
 (connector
 	(pt 552 -1024)
 	(pt 72 -1024)
-)
-(connector
-	(pt 72 -1024)
-	(pt 72 -656)
 )
 (connector
 	(pt 552 -1120)
@@ -2487,48 +2263,8 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1120 -960)
 )
 (connector
-	(pt 72 -1120)
-	(pt 72 -1024)
-)
-(connector
-	(pt 112 -936)
-	(pt 112 -840)
-)
-(connector
-	(pt 160 -1136)
-	(pt 160 -952)
-)
-(connector
-	(pt 208 -1040)
-	(pt 208 -768)
-)
-(connector
-	(pt 248 -1152)
-	(pt 248 -1056)
-)
-(connector
-	(pt 288 -872)
-	(pt 288 -784)
-)
-(connector
-	(pt 336 -1072)
-	(pt 336 -984)
-)
-(connector
-	(pt 384 -2912)
-	(pt 384 -1168)
-)
-(connector
-	(pt 384 -1168)
-	(pt 384 -888)
-)
-(connector
 	(pt 800 -1264)
 	(pt 336 -1264)
-)
-(connector
-	(pt 336 -1264)
-	(pt 336 -1072)
 )
 (connector
 	(pt 800 -1272)
@@ -2563,48 +2299,24 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -1304)
 )
 (connector
-	(pt 112 -1304)
-	(pt 112 -936)
-)
-(connector
 	(pt 536 -1312)
 	(pt 160 -1312)
-)
-(connector
-	(pt 160 -1312)
-	(pt 160 -1136)
 )
 (connector
 	(pt 536 -1320)
 	(pt 288 -1320)
 )
 (connector
-	(pt 288 -1320)
-	(pt 288 -872)
-)
-(connector
 	(pt 536 -1368)
 	(pt 72 -1368)
-)
-(connector
-	(pt 72 -1368)
-	(pt 72 -1120)
 )
 (connector
 	(pt 536 -1376)
 	(pt 160 -1376)
 )
 (connector
-	(pt 160 -1376)
-	(pt 160 -1312)
-)
-(connector
 	(pt 536 -1384)
 	(pt 248 -1384)
-)
-(connector
-	(pt 248 -1384)
-	(pt 248 -1152)
 )
 (connector
 	(pt 920 -1632)
@@ -2687,120 +2399,60 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -1440)
 )
 (connector
-	(pt 112 -1440)
-	(pt 112 -1304)
-)
-(connector
 	(pt 544 -1448)
 	(pt 208 -1448)
-)
-(connector
-	(pt 208 -1448)
-	(pt 208 -1040)
 )
 (connector
 	(pt 544 -1456)
 	(pt 248 -1456)
 )
 (connector
-	(pt 248 -1456)
-	(pt 248 -1384)
-)
-(connector
 	(pt 544 -1512)
 	(pt 112 -1512)
-)
-(connector
-	(pt 112 -1512)
-	(pt 112 -1440)
 )
 (connector
 	(pt 544 -1520)
 	(pt 208 -1520)
 )
 (connector
-	(pt 208 -1520)
-	(pt 208 -1448)
-)
-(connector
 	(pt 544 -1528)
 	(pt 336 -1528)
-)
-(connector
-	(pt 336 -1528)
-	(pt 336 -1264)
 )
 (connector
 	(pt 544 -1584)
 	(pt 112 -1584)
 )
 (connector
-	(pt 112 -1584)
-	(pt 112 -1512)
-)
-(connector
 	(pt 544 -1592)
 	(pt 248 -1592)
-)
-(connector
-	(pt 248 -1592)
-	(pt 248 -1456)
 )
 (connector
 	(pt 544 -1600)
 	(pt 336 -1600)
 )
 (connector
-	(pt 336 -1600)
-	(pt 336 -1528)
-)
-(connector
 	(pt 544 -1656)
 	(pt 208 -1656)
-)
-(connector
-	(pt 208 -1656)
-	(pt 208 -1520)
 )
 (connector
 	(pt 544 -1664)
 	(pt 248 -1664)
 )
 (connector
-	(pt 248 -1664)
-	(pt 248 -1592)
-)
-(connector
 	(pt 544 -1720)
 	(pt 72 -1720)
-)
-(connector
-	(pt 72 -1720)
-	(pt 72 -1368)
 )
 (connector
 	(pt 544 -1728)
 	(pt 160 -1728)
 )
 (connector
-	(pt 160 -1728)
-	(pt 160 -1376)
-)
-(connector
 	(pt 544 -1736)
 	(pt 288 -1736)
 )
 (connector
-	(pt 288 -1736)
-	(pt 288 -1320)
-)
-(connector
 	(pt 336 -1672)
 	(pt 544 -1672)
-)
-(connector
-	(pt 336 -1672)
-	(pt 336 -1600)
 )
 (connector
 	(pt 848 -1912)
@@ -2839,60 +2491,24 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -1840)
 )
 (connector
-	(pt 112 -1840)
-	(pt 112 -1584)
-)
-(connector
 	(pt 560 -1848)
 	(pt 208 -1848)
-)
-(connector
-	(pt 208 -1848)
-	(pt 208 -1656)
 )
 (connector
 	(pt 560 -1856)
 	(pt 288 -1856)
 )
 (connector
-	(pt 288 -2912)
-	(pt 288 -1856)
-)
-(connector
-	(pt 288 -1856)
-	(pt 288 -1736)
-)
-(connector
 	(pt 560 -1896)
 	(pt 72 -1896)
-)
-(connector
-	(pt 72 -2912)
-	(pt 72 -1896)
-)
-(connector
-	(pt 72 -1896)
-	(pt 72 -1720)
 )
 (connector
 	(pt 560 -1904)
 	(pt 208 -1904)
 )
 (connector
-	(pt 208 -2912)
-	(pt 208 -1904)
-)
-(connector
-	(pt 208 -1904)
-	(pt 208 -1848)
-)
-(connector
 	(pt 560 -1912)
 	(pt 248 -1912)
-)
-(connector
-	(pt 248 -1912)
-	(pt 248 -1664)
 )
 (connector
 	(pt 680 -2008)
@@ -2907,7 +2523,67 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -1984)
 )
 (connector
-	(pt 112 -2912)
+	(pt 552 -2000)
+	(pt 160 -2000)
+)
+(connector
+	(pt 552 -2016)
+	(pt 248 -2016)
+)
+(connector
+	(pt 552 -2032)
+	(pt 336 -2032)
+)
+(connector
+	(pt 72 -2152)
+	(pt 72 -1896)
+)
+(connector
+	(pt 72 -1896)
+	(pt 72 -1720)
+)
+(connector
+	(pt 72 -1720)
+	(pt 72 -1368)
+)
+(connector
+	(pt 72 -1368)
+	(pt 72 -1120)
+)
+(connector
+	(pt 72 -1120)
+	(pt 72 -1024)
+)
+(connector
+	(pt 72 -1024)
+	(pt 72 -656)
+)
+(connector
+	(pt 72 -656)
+	(pt 72 -456)
+)
+(connector
+	(pt 72 -456)
+	(pt 72 -368)
+)
+(connector
+	(pt 72 -368)
+	(pt 72 -64)
+)
+(connector
+	(pt 72 -64)
+	(pt 72 32)
+)
+(connector
+	(pt 72 32)
+	(pt 72 328)
+)
+(connector
+	(pt 72 328)
+	(pt 72 352)
+)
+(connector
+	(pt 112 -2152)
 	(pt 112 -1984)
 )
 (connector
@@ -2915,11 +2591,59 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 -1840)
 )
 (connector
-	(pt 552 -2000)
-	(pt 160 -2000)
+	(pt 112 -1840)
+	(pt 112 -1584)
 )
 (connector
-	(pt 160 -2912)
+	(pt 112 -1584)
+	(pt 112 -1512)
+)
+(connector
+	(pt 112 -1512)
+	(pt 112 -1440)
+)
+(connector
+	(pt 112 -1440)
+	(pt 112 -1304)
+)
+(connector
+	(pt 112 -1304)
+	(pt 112 -936)
+)
+(connector
+	(pt 112 -936)
+	(pt 112 -840)
+)
+(connector
+	(pt 112 -840)
+	(pt 112 -752)
+)
+(connector
+	(pt 112 -752)
+	(pt 112 -552)
+)
+(connector
+	(pt 112 -552)
+	(pt 112 -280)
+)
+(connector
+	(pt 112 -280)
+	(pt 112 -184)
+)
+(connector
+	(pt 112 -184)
+	(pt 112 120)
+)
+(connector
+	(pt 112 120)
+	(pt 112 224)
+)
+(connector
+	(pt 112 224)
+	(pt 112 256)
+)
+(connector
+	(pt 160 -2152)
 	(pt 160 -2000)
 )
 (connector
@@ -2927,11 +2651,107 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 -1728)
 )
 (connector
-	(pt 552 -2016)
-	(pt 248 -2016)
+	(pt 160 -1728)
+	(pt 160 -1376)
 )
 (connector
-	(pt 248 -2912)
+	(pt 160 -1376)
+	(pt 160 -1312)
+)
+(connector
+	(pt 160 -1312)
+	(pt 160 -1136)
+)
+(connector
+	(pt 160 -1136)
+	(pt 160 -952)
+)
+(connector
+	(pt 160 -952)
+	(pt 160 -856)
+)
+(connector
+	(pt 160 -856)
+	(pt 160 -672)
+)
+(connector
+	(pt 160 -672)
+	(pt 160 -472)
+)
+(connector
+	(pt 160 -472)
+	(pt 160 -296)
+)
+(connector
+	(pt 160 -296)
+	(pt 160 -200)
+)
+(connector
+	(pt 160 -200)
+	(pt 160 -80)
+)
+(connector
+	(pt 160 -80)
+	(pt 160 104)
+)
+(connector
+	(pt 160 104)
+	(pt 160 328)
+)
+(connector
+	(pt 160 328)
+	(pt 160 352)
+)
+(connector
+	(pt 208 -2152)
+	(pt 208 -1904)
+)
+(connector
+	(pt 208 -1904)
+	(pt 208 -1848)
+)
+(connector
+	(pt 208 -1848)
+	(pt 208 -1656)
+)
+(connector
+	(pt 208 -1656)
+	(pt 208 -1520)
+)
+(connector
+	(pt 208 -1520)
+	(pt 208 -1448)
+)
+(connector
+	(pt 208 -1448)
+	(pt 208 -1040)
+)
+(connector
+	(pt 208 -1040)
+	(pt 208 -768)
+)
+(connector
+	(pt 208 -768)
+	(pt 208 -568)
+)
+(connector
+	(pt 208 -568)
+	(pt 208 -384)
+)
+(connector
+	(pt 208 -384)
+	(pt 208 16)
+)
+(connector
+	(pt 208 16)
+	(pt 208 208)
+)
+(connector
+	(pt 208 208)
+	(pt 208 256)
+)
+(connector
+	(pt 248 -2152)
 	(pt 248 -2016)
 )
 (connector
@@ -2939,16 +2759,196 @@ https://fpgasoftware.intel.com/eula.
 	(pt 248 -1912)
 )
 (connector
-	(pt 552 -2032)
-	(pt 336 -2032)
+	(pt 248 -1912)
+	(pt 248 -1664)
 )
 (connector
-	(pt 336 -2912)
+	(pt 248 -1664)
+	(pt 248 -1592)
+)
+(connector
+	(pt 248 -1592)
+	(pt 248 -1456)
+)
+(connector
+	(pt 248 -1456)
+	(pt 248 -1384)
+)
+(connector
+	(pt 248 -1384)
+	(pt 248 -1152)
+)
+(connector
+	(pt 248 -1152)
+	(pt 248 -1056)
+)
+(connector
+	(pt 248 -1056)
+	(pt 248 -968)
+)
+(connector
+	(pt 248 -968)
+	(pt 248 -584)
+)
+(connector
+	(pt 248 -584)
+	(pt 248 -488)
+)
+(connector
+	(pt 248 -488)
+	(pt 248 -312)
+)
+(connector
+	(pt 248 -312)
+	(pt 248 -96)
+)
+(connector
+	(pt 248 -96)
+	(pt 248 0)
+)
+(connector
+	(pt 248 0)
+	(pt 248 328)
+)
+(connector
+	(pt 248 328)
+	(pt 248 352)
+)
+(connector
+	(pt 288 -2152)
+	(pt 288 -1856)
+)
+(connector
+	(pt 288 -1856)
+	(pt 288 -1736)
+)
+(connector
+	(pt 288 -1736)
+	(pt 288 -1320)
+)
+(connector
+	(pt 288 -1320)
+	(pt 288 -872)
+)
+(connector
+	(pt 288 -872)
+	(pt 288 -784)
+)
+(connector
+	(pt 288 -784)
+	(pt 288 -688)
+)
+(connector
+	(pt 288 -688)
+	(pt 288 -400)
+)
+(connector
+	(pt 288 -400)
+	(pt 288 -216)
+)
+(connector
+	(pt 288 -216)
+	(pt 288 88)
+)
+(connector
+	(pt 288 88)
+	(pt 288 192)
+)
+(connector
+	(pt 288 192)
+	(pt 288 256)
+)
+(connector
+	(pt 336 -2152)
 	(pt 336 -2032)
 )
 (connector
 	(pt 336 -2032)
 	(pt 336 -1672)
+)
+(connector
+	(pt 336 -1672)
+	(pt 336 -1600)
+)
+(connector
+	(pt 336 -1600)
+	(pt 336 -1528)
+)
+(connector
+	(pt 336 -1528)
+	(pt 336 -1264)
+)
+(connector
+	(pt 336 -1264)
+	(pt 336 -1072)
+)
+(connector
+	(pt 336 -1072)
+	(pt 336 -984)
+)
+(connector
+	(pt 336 -984)
+	(pt 336 -800)
+)
+(connector
+	(pt 336 -800)
+	(pt 336 -504)
+)
+(connector
+	(pt 336 -504)
+	(pt 336 -416)
+)
+(connector
+	(pt 336 -416)
+	(pt 336 -232)
+)
+(connector
+	(pt 336 -232)
+	(pt 336 -16)
+)
+(connector
+	(pt 336 -16)
+	(pt 336 176)
+)
+(connector
+	(pt 336 176)
+	(pt 336 328)
+)
+(connector
+	(pt 336 328)
+	(pt 336 352)
+)
+(connector
+	(pt 384 -2152)
+	(pt 384 -1168)
+)
+(connector
+	(pt 384 -1168)
+	(pt 384 -888)
+)
+(connector
+	(pt 384 -888)
+	(pt 384 -704)
+)
+(connector
+	(pt 384 -704)
+	(pt 384 -600)
+)
+(connector
+	(pt 384 -600)
+	(pt 384 -328)
+)
+(connector
+	(pt 384 -328)
+	(pt 384 -112)
+)
+(connector
+	(pt 384 -112)
+	(pt 384 72)
+)
+(connector
+	(pt 384 72)
+	(pt 384 256)
 )
 (junction (pt 72 328))
 (junction (pt 160 328))

@@ -22,7 +22,7 @@ https://fpgasoftware.intel.com/eula.
 (header "symbol" (version "1.2"))
 (symbol
 	(rect 16 16 112 176)
-	(text "decod7seg_ab_unidade" (rect 5 0 45 19)(font "Intel Clear" (font_size 8)))
+	(text "decod7seg_ab_unidade" (rect 5 0 147 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
