@@ -72,6 +72,7 @@ Regra central: **cada bloco existe uma única vez, na biblioteca `lib/`**. Todo 
 ```text
 Projeto1SD/
 ├── README.md
+├── CHECKLIST.md                  <-- andamento do projeto, bloco a bloco
 ├── .gitignore
 │
 ├── lib/                          <-- A BIBLIOTECA: todos os blocos, numa pasta só
@@ -111,8 +112,13 @@ Projeto1SD/
 | `mux_comparadores` | comparadores | Escolhe EQ/GT/LT para o `STATUS` | — | — |
 | `decodificador_comparadores` | decodificadores | `S` → bits de seleção dos comparadores (`F1`, `F2`) | — | — |
 | `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
+| `somador_completo` | aritmética | Somador completo de 1 bit | — | — |
+| `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
+| `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
+| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | valor 9 |
+| `decod7seg_f_dezena` | display | Magnitude 0–30 → dezena em 7 segmentos | — | — |
 
-Detalhes das pendências em [⏳ Pendências](#-pendências-depois-dos-testes).
+Detalhes das pendências em [⏳ Pendências](#-pendências-depois-dos-testes). O andamento bloco a bloco está no [CHECKLIST.md](CHECKLIST.md).
 
 | Categoria | Branch responsável |
 | :--- | :--- |
@@ -207,7 +213,8 @@ set_global_assignment -name SEARCH_PATH ../../lib
   * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
   * `comp2`: com `SB = 1` e `B = 0000` (zero negativo) a saída é `10000`; pela decisão, deveria ser `00000`.
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-* **Blocos que faltam:** `comparador_maior` e `comparador_menor`; aritmética (somador/subtrator e conversões sinal/magnitude ↔ C2); decodificador de `S[2..0]` para o seletor de 2 bits do `mux_saida` (`00` soma/sub, `01` C2, `10` AND, `11` XOR); display (BCD, 7 segmentos, *blanking*); `ula`; top-level e pinagem.
+  * `decod7seg_ab_unidade`: pela leitura do esquemático, o valor 9 acende como 5 (termo `D·C'·B'·A` em `bu_seg` apaga o segmento b). Conferir na simulação.
+* **Blocos que faltam:** `somador6`, `inversor5`, `c2_para_sm`, `somador_subtrator`, `comparador_maior`, `decod7seg_f_unidade` (citado no projeto do colega, mas o arquivo não veio), `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
 * **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `comp2`, `mux4x1` e `mux_saida`; `.bsf` do `mux_saida` (abrir `testes/mux_saida/mux_saida.qpf` e gerar em `lib/`).
 
 ---
