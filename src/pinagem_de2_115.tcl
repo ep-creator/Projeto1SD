@@ -2,7 +2,7 @@
 # Uso: com src/Projeto1SD.qpf aberto no Quartus, no Tcl Console (View > Utility Windows > Tcl Console):
 #   source pinagem_de2_115.tcl
 # Os nomes dos pinos no toplevel.bdf precisam ser exatamente estes:
-#   entrada SW[17..0]; saidas LEDR[17..0], LEDG[5..0], LED_STATUS, HEX0[6..0], HEX1[6..0], HEX4[6..0] ... HEX7[6..0]
+#   entrada SW[17..0]; saidas LEDR[17..0], LEDG[5..0], LED_STATUS, HEX0[6..0], HEX1[6..0], HEX2[6..0], HEX4[6..0] ... HEX7[6..0]
 # (HEX[0] = segmento a ... HEX[6] = segmento g; segmentos acendem com 0)
 # Projeto final (placa DE2-115): top-level = toplevel.bdf
 # Chaves: A = SW[17..13] (SW17 = sinal), B = SW[12..8] (SW12 = sinal), S = SW[2..0]
@@ -92,5 +92,13 @@ set_location_assignment PIN_L25 -to HEX0[4]
 set_location_assignment PIN_J22 -to HEX0[5]
 set_location_assignment PIN_H22 -to HEX0[6]
 set_location_assignment PIN_F17 -to LED_STATUS
+# HEX2: sinal do resultado (segmento g = "-" quando F e negativo, so em soma/subtracao)
+set_location_assignment PIN_AA25 -to HEX2[0]
+set_location_assignment PIN_AA26 -to HEX2[1]
+set_location_assignment PIN_Y25 -to HEX2[2]
+set_location_assignment PIN_W26 -to HEX2[3]
+set_location_assignment PIN_Y26 -to HEX2[4]
+set_location_assignment PIN_W27 -to HEX2[5]
+set_location_assignment PIN_W28 -to HEX2[6]
 export_assignments
 puts "Pinagem gravada no Projeto1SD.qsf"
