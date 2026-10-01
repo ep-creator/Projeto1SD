@@ -5,6 +5,33 @@ Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
 > **Próximo passo:** testar `inversor5` e `c2_para_sm` no Quartus → ligar o `c2_para_sm` na saída do `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
 
+## 📋 O que falta (resumo em 01/10)
+
+**Criar**
+- [ ] `apaga_display` (item 7)
+- [ ] `ula` (item 6)
+- [ ] `src/toplevel.bdf` + pinagem (item 8)
+
+**Ajustar**
+- [ ] `somador_subtrator`: ligar o `c2_para_sm` na saída (bloco do colega: combinar quem faz)
+- [ ] `comp_maior`: terminar a lógica do sinal
+- [ ] `decod7seg_ab_unidade`: o 9 aparece como 5
+- [ ] `mux_saida`: entradas de 1 bit (corrigir, ou usar 6× `mux4x1` na `ula`)
+- [ ] `comparador_igual`: conferir `00000` × `10000` = 1
+
+**No Quartus**
+- [ ] Testar os blocos novos `inversor5` e `c2_para_sm` (gerados fora do Quartus)
+- [ ] Gerar `.bsf`: `somador_subtrator`, `comp_maior`, `decod7seg_f`
+- [ ] Refazer simulação (gravada antes de correção): `op_and`, `op_xor`; completar `decod7seg_f_unidade` (só tem `gUNI`)
+- [ ] Criar simulação: `mux2x1`, `mux4x1`, `inversor`, `inversor5`, `c2_para_sm`, `somador_completo`, `comp_maior`, `mux_saida`, `decod7seg_ab_dezena`, `decod7seg_ab_unidade`, `decod7seg_f`
+- [ ] Preencher as tabelas verdade (`testes/<bloco>/tabela_verdade.md`): nenhuma está preenchida ainda
+
+**Decidir**
+- [ ] F nas comparações (`011`, `100`, `101`): ver [Em aberto](#em-aberto)
+
+**Git**
+- [ ] Merge da `feat/biblioteca` na `develop` (item 0)
+
 **Etiquetas:** 🟢 já existe e serve · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação (portas/fios dentro do bloco pai, sem bloco próprio)
 
 ## Visão geral
