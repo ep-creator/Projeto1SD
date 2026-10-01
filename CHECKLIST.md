@@ -3,7 +3,7 @@
 Lista de tudo que a ULA precisa, bloco por bloco. Marque `[x]` quando o item estiver pronto (no VS Code ou direto no GitHub).
 Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
-> **Situação (01/10/2026):** versão final. Toplevel montado, pinagem aplicada e sistema **testado na DE2-115, funcionando**. Integrado na `main`.
+> **Situação (01/10/2026):** versão final. Toplevel montado, pinagem aplicada e sistema **testado na DE2-115, funcionando**. Integrado na `main`. Relatório quase pronto: faltam os prints das simulações e a foto da placa.
 
 **Etiquetas:** 🟢 pronto (compilado e simulado com todas as entradas) · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação
 
@@ -15,9 +15,16 @@ Um bloco está **concluído** quando todos os subitens dele estão marcados.
 - [x] Compilação completa e gravação na placa
 - [x] Teste na placa
 
-**Relatório**
-- [ ] Preencher as tabelas verdade (`testes/<bloco>/tabela_verdade.md`)
-- [ ] Simulações `.vwf` para o relatório (a `ula` e os blocos principais); refazer `op_and.vwf`, `op_xor.vwf` e `somador_subtrator.vwf` (gravadas antes das correções)
+**Relatório** (documento: `docs/relatorio/Relatorio_Projeto1SD.docx` / `.pdf`)
+- [x] Texto: capa, introdução, visão geral em blocos, fundamentos, módulos, sistema completo e conclusão (`docs/relatorio/partes/`)
+- [x] Capa: equipe (ala8, dbm5, ep, pabpa) e professor Abel Guilhermino
+- [x] Tabelas verdade, equações e mapas-K de todos os blocos (`testes/<bloco>/tabela_verdade.md`), geradas pela especificação
+- [x] Prints dos circuitos dos 25 blocos e do toplevel
+- [x] `.vwf` de todos os blocos (as que faltavam geradas por `ferramentas/relatorio/gera_vwf.py`)
+- [ ] Rodar as simulações e tirar os prints (lista em [`docs/relatorio/PRINTS.md`](docs/relatorio/PRINTS.md)); no PC de casa o Questa recusa a licença (*Invalid host*): usar o PC do lab ou gerar licença nova
+- [ ] Conferir as tabelas verdade com as simulações
+- [ ] Foto da placa funcionando (`docs/relatorio/figuras/placa.jpg`)
+- [ ] Gerar a versão final (`python3 ferramentas/relatorio/monta_relatorio.py`) e imprimir
 
 **Git**
 - [x] Merge da `feat/biblioteca` na `develop`

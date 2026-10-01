@@ -1,0 +1,32 @@
+digraph G {
+  rankdir=LR; nodesep=0.35; ranksep=0.55; splines=spline;
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#334155", fontname="Helvetica", fontsize=13, penwidth=1.2];
+  edge [color="#334155", fontname="Helvetica", fontsize=11, arrowsize=0.7];
+  subgraph cluster_in { label="Chaves (entradas)"; fontname="Helvetica-Bold"; fontsize=11; style="rounded,dashed"; color="#94a3b8";
+    SWA [label="SW17..SW13\nA (5 bits, SM)", fillcolor="#e0e7ff"];
+    SWB [label="SW12..SW8\nB (5 bits, SM)", fillcolor="#e0e7ff"];
+    SWS [label="SW2..SW0\nS (3 bits)", fillcolor="#e0e7ff"];
+  }
+  ULA [label="ula\n\nsoma, subtração, C2 de B,\n=, >, <, AND, XOR", fillcolor="#fde68a", penwidth=2, fontsize=12, height=1.6];
+  DA [label="decod7seg_ab_dezena\ndecod7seg_ab_unidade", fillcolor="#dcfce7"];
+  DB [label="decod7seg_ab_dezena\ndecod7seg_ab_unidade", fillcolor="#dcfce7"];
+  DF [label="decod7seg_f\n(dezena + unidade)", fillcolor="#dcfce7"];
+  AP [label="apaga_display ×2", fillcolor="#dcfce7"];
+  NAND [label="NAND", shape=box, fillcolor="#f1f5f9"];
+  subgraph cluster_out { label="LEDs e displays (saídas)"; fontname="Helvetica-Bold"; fontsize=11; style="rounded,dashed"; color="#94a3b8";
+    HA [label="HEX7 HEX6\n|A|", fillcolor="#fee2e2"];
+    HB [label="HEX5 HEX4\n|B|", fillcolor="#fee2e2"];
+    HF [label="HEX1 HEX0\n|F|", fillcolor="#fee2e2"];
+    H2 [label="HEX2\nsinal de F (−)", fillcolor="#fee2e2"];
+    LG [label="LEDG5..LEDG0\nF (6 bits, SM)", fillcolor="#fee2e2"];
+    LS [label="LEDG8\nSTATUS", fillcolor="#fee2e2"];
+    LR [label="LEDR17..LEDR0\ncópia das chaves\n(LEDR17 = sinal de A,\nLEDR12 = sinal de B)", fillcolor="#fee2e2"];
+  }
+  SWA -> ULA [label="A[4..0]"]; SWB -> ULA [label="B[4..0]"]; SWS -> ULA [label="S[2..0]"];
+  SWA -> DA [label="A[3..0]"]; SWB -> DB [label="B[3..0]"];
+  DA -> HA; DB -> HB;
+  ULA -> LG [label="F[5..0]"]; ULA -> LS [label="STATUS"];
+  ULA -> DF [label="F[4..0], F[5]"]; DF -> AP; ULA -> AP [label="DISP_EN"]; AP -> HF;
+  ULA -> NAND [label="F[5], DISP_EN"]; NAND -> H2;
+  SWS -> LR [style=dashed, label="SW[17..0]"];
+}

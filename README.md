@@ -510,7 +510,7 @@ As ferramentas estão em [`ferramentas/verificacao/`](ferramentas/verificacao/):
 | Displays ativos em nível baixo | todos os decodificadores geram 0 para acender |
 | Pronto para a DE2-115 com pinagem | `src/Projeto1SD.qsf` com os 92 pinos |
 
-**Relatório (itens a–f do enunciado):** a visão geral em blocos e a explicação dos módulos estão nas seções [1](#1-visão-geral), [4](#4-a-lógica-por-trás) e [5](#5-módulos); as tabelas verdade de cada bloco ficam em `testes/<bloco>/tabela_verdade.md`; os circuitos são os `lib/<bloco>.bdf`; as simulações, os `testes/<bloco>/<bloco>.vwf`; o sistema completo é o `src/toplevel.bdf`.
+**Relatório (itens a–f do enunciado):** o documento de entrega é o [`docs/relatorio/Relatorio_Projeto1SD.docx`](docs/relatorio/Relatorio_Projeto1SD.docx) (e o `.pdf` para imprimir), gerado por `python3 ferramentas/relatorio/monta_relatorio.py` a partir de `docs/relatorio/partes/` (capa, introdução, visão geral, fundamentos, sistema completo e conclusão), dos `testes/<bloco>/tabela_verdade.md` (funcionamento, tabela verdade, equações e mapas de Karnaugh) e das figuras `testes/<bloco>/<bloco>_circuito.png` e `<bloco>_simulacao.png`. O que ainda falta está em [`docs/relatorio/PRINTS.md`](docs/relatorio/PRINTS.md).
 
 ---
 
@@ -527,7 +527,8 @@ Projeto1SD/
 │   ├── toplevel.bdf           ULA + displays + LEDs da DE2-115
 │   └── pinagem_de2_115.tcl    script que aplica a pinagem
 ├── ferramentas/verificacao/   scripts de compilação e simulação de todos os blocos
-└── docs/relatorio/            material do relatório
+├── ferramentas/relatorio/     scripts do relatório (tabelas verdade, .vwf e montagem do .docx)
+└── docs/relatorio/            relatório de entrega (.docx/.pdf), texto das seções e figuras
 ```
 
 `lib/` não tem subpastas porque o Quartus não procura blocos em subpastas de uma biblioteca: com uma pasta só, uma linha `SEARCH_PATH` basta para qualquer projeto enxergar todos os blocos, e nada é copiado.
