@@ -105,6 +105,7 @@ Projeto1SD/
 | `mux2x1` | comum | MUX 2:1 de 1 bit | — | — |
 | `mux4x1` | comum | MUX 4:1 de 1 bit | — | — |
 | `inversor` | c2 | C2 de 4 bits (inverte e soma 1) | — | — |
+| `inversor5` | c2 | C2 de 5 bits (`I[4..0]` → `O[4..0]`) | — | não testado |
 | `comp2` | c2 | Sinal/magnitude → C2 condicional (`I[3..0]`, `IS` → `O[3..0]`, `OS`) | `inversor`, `mux2x1` | — |
 | `op_and` | lógica | AND bit a bit | — | — |
 | `op_xor` | lógica | XOR bit a bit | — | — |
@@ -116,6 +117,7 @@ Projeto1SD/
 | `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
 | `somador_completo` | aritmética | Somador completo de 1 bit | — | — |
 | `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | — |
+| `c2_para_sm` | aritmética | C2 de 6 bits → sinal-magnitude (`I[5..0]` → `O[5..0]`, `O[5]` = sinal) | `inversor5`, `mux2x1` | não testado |
 | `somador_subtrator` | aritmética | A ± B a partir de sinal-magnitude (`sinal_a`, `W[3..0]`, `sinal_b`, `X[3..0]`, `sinal_op` → `R[5..0]`) | `comp2`, `somador6` | saída ainda em C2 (falta `c2_para_sm`); falta `.bsf` |
 | `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
 | `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
@@ -223,8 +225,8 @@ set_global_assignment -name SEARCH_PATH ../../lib
 * **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
   * `decod7seg_ab_unidade`: o 9 (`1001`) aparece como 5 — a AND4 de entradas A, B', C', D ainda está na OR4 de `bu_seg` (o commit `9b892ca` só redesenhou os fios).
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-* **Blocos que faltam:** `inversor5`, `c2_para_sm`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f`, do `comp_maior` e do `somador_subtrator` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
+* **Blocos que faltam:** `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `inversor5`, `c2_para_sm`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f`, do `comp_maior` e do `somador_subtrator` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
 
 ---
 

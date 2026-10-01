@@ -3,7 +3,7 @@
 Lista de tudo que a ULA precisa, bloco por bloco. Marque `[x]` quando o item estiver pronto (no VS Code ou direto no GitHub).
 Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
-> **Próximo passo:** `inversor5` → `c2_para_sm` → ligar o `c2_para_sm` na saída do `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
+> **Próximo passo:** testar `inversor5` e `c2_para_sm` no Quartus → ligar o `c2_para_sm` na saída do `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
 
 **Etiquetas:** 🟢 já existe e serve · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação (portas/fios dentro do bloco pai, sem bloco próprio)
 
@@ -55,10 +55,13 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
     - [x] criar na biblioteca
     - [x] simulação (`testes/somador6/somador6.vwf`)
     - [ ] tabela verdade
-  - [ ] 🔴 **`c2_para_sm`**: resultado em C2 (6 bits) → sinal-magnitude (`F[5]` = sinal, `F[4..0]` = magnitude até 30)
-    - [ ] 🔴 **`inversor5`**: C2 de 5 bits (o `inversor` atual só tem 4, e a magnitude chega a 30)
-    - [ ] 🟢 `mux2x1` ×5: escolhe entre o valor direto e o invertido, com seletor = bit de sinal
-    - [ ] tabela verdade + simulação
+  - [ ] 🟢 **`c2_para_sm`**: resultado em C2 (6 bits) → sinal-magnitude (`I[5..0]` → `O[5..0]`; `O[5]` = sinal, `O[4..0]` = magnitude até 30)
+    - [x] criar na biblioteca (`.bdf` e `.bsf` gerados fora do Quartus: abrir, conferir e, se precisar, regerar o `.bsf`)
+    - [ ] 🟢 **`inversor5`**: C2 de 5 bits (`I[4..0]` → `O[4..0]`; o `inversor` atual só tem 4, e a magnitude chega a 30)
+      - [x] criar na biblioteca (mesmo padrão do `inversor`: `O[k] = I[k] XOR (I[k-1] + … + I[0])`)
+      - [ ] compilar `testes/inversor5` + tabela verdade + simulação
+    - [x] 🟢 `mux2x1` ×5: escolhe entre o valor direto (`A`) e o invertido (`B`), com seletor `S = I[5]`
+    - [ ] compilar `testes/c2_para_sm` + tabela verdade + simulação
   - [ ] tabela verdade + simulação do `somador_subtrator` (veio uma simulação junto, com a saída ainda em C2): +5+(−3), (−9)−(+12), (−8)+(−8), (−15)+(−15), (+7)−(+7), (−0)+(+0)
 
 ---

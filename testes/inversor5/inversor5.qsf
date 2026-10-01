@@ -1,0 +1,10 @@
+# Projeto de teste do bloco 'inversor5'
+# O circuito NAO fica aqui: ele esta na biblioteca, em lib/inversor5.bdf
+# Editar o bloco por este projeto altera o arquivo da biblioteca.
+# Esta pasta guarda so o que e do teste: projeto, tabela verdade e simulacao (inversor5.vwf)
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY inversor5
+set_global_assignment -name BDF_FILE ../../lib/inversor5.bdf
+set_global_assignment -name SEARCH_PATH ../../lib
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
