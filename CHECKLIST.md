@@ -3,6 +3,8 @@
 Lista de tudo que a ULA precisa, bloco por bloco. Marque `[x]` quando o item estiver pronto (no VS Code ou direto no GitHub).
 Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
+> **Próximo passo:** `inversor5` → `c2_para_sm` → `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
+
 **Etiquetas:** 🟢 já existe e serve · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação (portas/fios dentro do bloco pai, sem bloco próprio)
 
 ## Visão geral
@@ -25,7 +27,7 @@ toplevel ─────────────────── chaves, LEDs 
 - [x] Biblioteca `lib/` e testes em `testes/<bloco>/` (branch `feat/biblioteca`)
 - [x] Validar no Quartus: projeto de teste acha os blocos em `lib/`
 - [x] Validar no Quartus: montagem em `src/` e edição de um bloco valendo para todos
-- [ ] Validar no Quartus: criar um bloco novo pelo *New Project Wizard* (ponto 4)
+- [x] Validar no Quartus: criar um bloco novo pelo *New Project Wizard* (ponto 4, feito com o `somador6`; o Wizard não grava o `SEARCH_PATH`, conferir o `.qsf`)
 - [ ] Merge da `feat/biblioteca` na `develop`
 - [ ] Trazer a `develop` para as branches `feat/*` antigas (`git merge develop`)
 
@@ -44,8 +46,8 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
   - [ ] 🔌 inverter o sinal de B na subtração: `SB' = SB XOR SUB`
   - [ ] 🟢 **`somador_completo`**, 1 bit (`A`, `B`, `Cin` → `S`, `Cout`)
     - [x] na biblioteca (enviado pelo grupo como `soma1`)
-    - [ ] compilar `testes/somador_completo`
-    - [ ] tabela verdade + simulação
+    - [x] funcionando: compilado e simulado dentro do `somador6`
+    - [ ] tabela verdade + simulação próprias (para o relatório)
   - [ ] 🟢 **`somador6`**: 6× `somador_completo`; estende o sinal de 5 para 6 bits repetindo o bit 4
     - [x] criar na biblioteca
     - [x] simulação (`testes/somador6/somador6.vwf`)
@@ -131,9 +133,9 @@ Os decodificadores vão direto do binário para os segmentos, sem passar por BCD
   - [x] na biblioteca (enviado pelo grupo como `decodificadores`)
   - [ ] compilar `testes/decod7seg_ab_dezena`
   - [ ] tabela verdade + simulação
-- [ ] 🟢 **`decod7seg_ab_unidade`**: magnitude 0–15 → dígito da unidade, ×2 (A e B)
+- [ ] 🟡 **`decod7seg_ab_unidade`**: magnitude 0–15 → dígito da unidade, ×2 (A e B)
   - [x] na biblioteca (enviado pelo grupo como `Block4`)
-  - [x] corrigir o valor 9 (segmento b apagado)
+  - [ ] corrigir o valor 9: o commit `9b892ca` só redesenhou os fios; pela leitura do esquemático, o 9 (`1001`) ainda aparece como **5**. Tirar da OR4 de `bu_seg` a AND4 de entradas A, B', C', D (A = bit mais significativo) e pôr GND no lugar
   - [ ] tabela verdade + simulação
 - [ ] 🟢 **`decod7seg_f_dezena`**: magnitude de F, 0–30 → dezena (`0` a `3`)
   - [x] na biblioteca (enviado pelo grupo como `decod7segDezena`)
@@ -171,7 +173,7 @@ Os decodificadores vão direto do binário para os segmentos, sem passar por BCD
 - **Zero negativo:** +0 e −0 são iguais.
 - **Soma/subtração:** via `comp2` (sinal-magnitude → C2 → soma → volta para sinal-magnitude).
 - **Volta para sinal-magnitude:** `inversor5` + `mux2x1`, no mesmo padrão do `comp2`.
-- **Operação `010`:** F em 6 bits = `{FS, FS, F3..F0}`.
+- **Operação `010`:** F em 6 bits = `{OS, OS, O[3..0]}` (saídas do `comp2`).
 - **`A < B`:** segunda instância do `comparador_maior` com A e B trocados.
 - **Displays:** decodificadores binário → 7 segmentos do grupo, sem BCD.
 

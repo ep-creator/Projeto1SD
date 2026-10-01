@@ -116,7 +116,7 @@ Projeto1SD/
 | `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | — |
 | `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
 | `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
-| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | — |
+| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | valor 9 |
 | `decod7seg_f_dezena` | display | Magnitude 0–30 → dezena em 7 segmentos | — | — |
 | `decod7seg_f_unidade` | display | Magnitude 0–30 → unidade em 7 segmentos | — | simulação só com `gUNI` |
 | `decod7seg_f` | display | \|F\| nos dois displays (`S[4..0]`, `sinal_S` → segmentos DEZ/UNI, `led_negativo`) | `decod7seg_f_dezena`, `decod7seg_f_unidade` | falta `.bsf` |
@@ -181,11 +181,16 @@ Os blocos não ficam travados: o arquivo em `lib/` é o próprio circuito.
 
 1. Crie a pasta `testes/<bloco>/`.
 2. *File > New Project Wizard*: diretório `testes/<bloco>`, nome do projeto e entidade top-level `<bloco>`, família *Cyclone IV E*, dispositivo **EP4CE115F29C7**.
-3. *Assignments > Settings > Libraries* e adicione `../../lib` em *Project libraries*. Assim o bloco novo já pode usar os outros blocos da biblioteca.
+3. *Assignments > Settings > Libraries* e adicione `../../lib` em *Project libraries*. Assim o bloco novo já pode usar os outros blocos da biblioteca. **Confira o `.qsf`** depois (passo 8): o Wizard pode não gravar a linha.
 4. *File > New > Block Diagram/Schematic File*, desenhe e salve com *File > Save As* **dentro de `lib/`**, como `<bloco>.bdf`, com *Add file to current project* marcado.
 5. Gere o símbolo: *File > Create/Update > Create Symbol Files for Current File*. Confira que `<bloco>.bsf` ficou em `lib/`.
 6. Copie `tabela_verdade.md` de outro bloco para `testes/<bloco>/` e adapte; salve a simulação como `testes/<bloco>/<bloco>.vwf`.
 7. Acrescente o bloco no [catálogo](#-catálogo-da-biblioteca).
+8. Confira que o `.qsf` tem a linha `SEARCH_PATH ../../lib`. Se não tiver, acrescente com o projeto **fechado** no Quartus (o `.qsf` pode não terminar com quebra de linha, por isso o `` `n `` antes):
+
+```powershell
+Add-Content -Path testes/<bloco>/<bloco>.qsf -Value "`nset_global_assignment -name SEARCH_PATH ../../lib" -Encoding ascii
+```
 
 O `.qsf` do teste fica assim (exemplo do `comp2`):
 
@@ -214,9 +219,10 @@ set_global_assignment -name SEARCH_PATH ../../lib
 * **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`) e `inversor` (`I0..I3` → `F0..F3`).
 * **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
   * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
+  * `decod7seg_ab_unidade`: o 9 (`1001`) aparece como 5 — a AND4 de entradas A, B', C', D ainda está na OR4 de `bu_seg` (o commit `9b892ca` só redesenhou os fios).
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
 * **Blocos que faltam:** `inversor5`, `c2_para_sm`, `somador_subtrator`, `comparador_maior`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `mux_saida` e do `decod7seg_f` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
 
 ---
 
