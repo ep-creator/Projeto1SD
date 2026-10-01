@@ -636,53 +636,6 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 536 -432 600 -352)
-	(text "AND4" (rect 1 0 25 10)(font "Arial" (font_size 6)))
-	(text "inst11" (rect 3 69 31 86)(font "Intel Clear" ))
-	(port
-		(pt 0 16)
-		(input)
-		(text "IN1" (rect 2 7 19 19)(font "Courier New" (bold))(invisible))
-		(text "IN1" (rect 2 7 19 19)(font "Courier New" (bold))(invisible))
-		(line (pt 0 16)(pt 18 16))
-	)
-	(port
-		(pt 0 32)
-		(input)
-		(text "IN2" (rect 2 23 19 35)(font "Courier New" (bold))(invisible))
-		(text "IN2" (rect 2 23 19 35)(font "Courier New" (bold))(invisible))
-		(line (pt 0 32)(pt 18 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "IN3" (rect 2 39 19 51)(font "Courier New" (bold))(invisible))
-		(text "IN3" (rect 2 39 19 51)(font "Courier New" (bold))(invisible))
-		(line (pt 0 48)(pt 18 48))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "IN4" (rect 2 55 19 67)(font "Courier New" (bold))(invisible))
-		(text "IN4" (rect 2 55 19 67)(font "Courier New" (bold))(invisible))
-		(line (pt 0 64)(pt 18 64))
-	)
-	(port
-		(pt 64 40)
-		(output)
-		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
-		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
-		(line (pt 46 40)(pt 64 40))
-	)
-	(drawing
-		(line (pt 18 28)(pt 34 28))
-		(line (pt 18 52)(pt 18 28))
-		(line (pt 18 67)(pt 18 13))
-		(line (pt 34 53)(pt 18 53))
-		(arc (pt 34 52)(pt 34 28)(rect 22 28 47 53))
-	)
-)
-(symbol
 	(rect 536 -520 600 -440)
 	(text "AND4" (rect 1 0 25 10)(font "Arial" (font_size 6)))
 	(text "inst12" (rect 3 69 31 86)(font "Intel Clear" ))
@@ -1955,18 +1908,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 824 -336)
 )
 (connector
-	(pt 600 -392)
-	(pt 712 -392)
-)
-(connector
-	(pt 712 -392)
-	(pt 712 -352)
-)
-(connector
-	(pt 712 -352)
-	(pt 824 -352)
-)
-(connector
 	(pt 600 -480)
 	(pt 744 -480)
 )
@@ -2013,22 +1954,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 536 -328)
 	(pt 384 -328)
-)
-(connector
-	(pt 536 -368)
-	(pt 72 -368)
-)
-(connector
-	(pt 536 -384)
-	(pt 208 -384)
-)
-(connector
-	(pt 536 -400)
-	(pt 288 -400)
-)
-(connector
-	(pt 536 -416)
-	(pt 336 -416)
 )
 (connector
 	(pt 536 -456)
@@ -2535,10 +2460,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 336 -2032)
 )
 (connector
-	(pt 72 -2152)
-	(pt 72 -1896)
-)
-(connector
 	(pt 72 -1896)
 	(pt 72 -1720)
 )
@@ -2581,10 +2502,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 72 328)
 	(pt 72 352)
-)
-(connector
-	(pt 112 -2152)
-	(pt 112 -1984)
 )
 (connector
 	(pt 112 -1984)
@@ -2643,10 +2560,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 112 256)
 )
 (connector
-	(pt 160 -2152)
-	(pt 160 -2000)
-)
-(connector
 	(pt 160 -2000)
 	(pt 160 -1728)
 )
@@ -2703,10 +2616,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 160 352)
 )
 (connector
-	(pt 208 -2152)
-	(pt 208 -1904)
-)
-(connector
 	(pt 208 -1904)
 	(pt 208 -1848)
 )
@@ -2749,10 +2658,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 208 208)
 	(pt 208 256)
-)
-(connector
-	(pt 248 -2152)
-	(pt 248 -2016)
 )
 (connector
 	(pt 248 -2016)
@@ -2815,10 +2720,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 248 352)
 )
 (connector
-	(pt 288 -2152)
-	(pt 288 -1856)
-)
-(connector
 	(pt 288 -1856)
 	(pt 288 -1736)
 )
@@ -2857,10 +2758,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 288 192)
 	(pt 288 256)
-)
-(connector
-	(pt 336 -2152)
-	(pt 336 -2032)
 )
 (connector
 	(pt 336 -2032)
@@ -2917,10 +2814,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 336 328)
 	(pt 336 352)
-)
-(connector
-	(pt 384 -2152)
-	(pt 384 -1168)
 )
 (connector
 	(pt 384 -1168)
@@ -3046,3 +2939,25 @@ https://fpgasoftware.intel.com/eula.
 (junction (pt 160 -2000))
 (junction (pt 248 -2016))
 (junction (pt 336 -2032))
+(symbol
+	(rect 784 -384 816 -352)
+	(text "GND" (rect 3 6 24 16)(font "Arial" (font_size 6)))
+	(text "inst_gnd9" (rect 7 -6 29 11)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 32)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 9 20 14 32)(font "Courier New" (bold))(invisible))
+		(line (pt 16 24)(pt 16 32))
+	)
+	(drawing
+		(line (pt 24 24)(pt 16 16))
+		(line (pt 16 16)(pt 8 24))
+		(line (pt 24 24)(pt 8 24))
+	)
+	(rotate180)
+)
+(connector
+	(pt 800 -352)
+	(pt 824 -352)
+)
