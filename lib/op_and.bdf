@@ -156,7 +156,7 @@ https://fpgasoftware.intel.com/eula.
 	(output)
 	(rect 808 432 824 608)
 	(text "OUTPUT" (rect 6 1 16 39)(font "Arial" (font_size 6))(vertical))
-	(text "F[5]" (rect -1 90 16 108)(font "Intel Clear" )(vertical))
+	(text "F[4]" (rect 0 89 17 107)(font "Intel Clear" )(vertical))
 	(pt 8 0)
 	(drawing
 		(line (pt 8 0)(pt 8 52))
@@ -173,7 +173,7 @@ https://fpgasoftware.intel.com/eula.
 	(output)
 	(rect 688 528 704 704)
 	(text "OUTPUT" (rect 6 1 16 39)(font "Arial" (font_size 6))(vertical))
-	(text "F[4]" (rect 5 89 17 109)(font "Arial" )(vertical))
+	(text "F[5]" (rect 5 89 17 109)(font "Arial" )(vertical))
 	(pt 8 0)
 	(drawing
 		(line (pt 8 0)(pt 8 52))

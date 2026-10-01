@@ -72,14 +72,14 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
 
 ## 3. Lógica: AND e XOR (`110`, `111`)
 
-- [ ] 🟡 **`op_and`**
+- [ ] 🟢 **`op_and`**
   - [x] na biblioteca
-  - [ ] corrigir `F[4]`/`F[5]` trocados (o sinal sai em `F[4]`), feito pelo autor; ou ligar trocado na `ula`
-  - [ ] tabela verdade + simulação
-- [ ] 🟡 **`op_xor`**
+  - [x] corrigir `F[4]`/`F[5]` trocados: agora o sinal (`SA AND SB`) sai em `F[5]` e o GND em `F[4]` (corrigido pelo autor)
+  - [ ] rodar a simulação de novo (`op_and.vwf` foi gravada antes da correção) + tabela verdade
+- [ ] 🟢 **`op_xor`**
   - [x] na biblioteca
-  - [ ] corrigir `F[4]`/`F[5]` trocados, feito pelo autor; ou ligar trocado na `ula`
-  - [ ] tabela verdade + simulação
+  - [x] corrigir `F[4]`/`F[5]` trocados: agora o sinal (`SA XOR SB`) sai em `F[5]` e o GND em `F[4]` (corrigido pelo autor)
+  - [ ] rodar a simulação de novo (`op_xor.vwf` foi gravada antes da correção) + tabela verdade
 
 ---
 

@@ -106,8 +106,8 @@ Projeto1SD/
 | `mux4x1` | comum | MUX 4:1 de 1 bit | — | — |
 | `inversor` | c2 | C2 de 4 bits (inverte e soma 1) | — | — |
 | `comp2` | c2 | Sinal/magnitude → C2 condicional (`I[3..0]`, `IS` → `O[3..0]`, `OS`) | `inversor`, `mux2x1` | — |
-| `op_and` | lógica | AND bit a bit | — | `F[4]`/`F[5]` trocados |
-| `op_xor` | lógica | XOR bit a bit | — | `F[4]`/`F[5]` trocados |
+| `op_and` | lógica | AND bit a bit | — | — |
+| `op_xor` | lógica | XOR bit a bit | — | — |
 | `comparador_igual` | comparadores | $A = B$ | — | — |
 | `comp_mag` | comparadores | \|A\| > \|B\| em 4 bits (`A[3..0]`, `B[3..0]` → `O`) | — | — |
 | `comp_maior` | comparadores | A > B em sinal-magnitude (`A[3..0]`, `SA`, `B[3..0]`, `SB` → `O`) | `comp_mag` | lógica do sinal em andamento; falta `.bsf` |
@@ -221,7 +221,6 @@ set_global_assignment -name SEARCH_PATH ../../lib
 
 * **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`) e `inversor` (`I0..I3` → `F0..F3`).
 * **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
-  * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
   * `decod7seg_ab_unidade`: o 9 (`1001`) aparece como 5 — a AND4 de entradas A, B', C', D ainda está na OR4 de `bu_seg` (o commit `9b892ca` só redesenhou os fios).
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
 * **Blocos que faltam:** `inversor5`, `c2_para_sm`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
