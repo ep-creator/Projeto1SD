@@ -27,3 +27,6 @@ desktop.ini
 
 # ---- Saida da verificacao (ferramentas/verificacao) ----
 ferramentas/verificacao/saida/
+
+# LibreOffice
+.~lock.*#

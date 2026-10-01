@@ -1,21 +1,55 @@
 # c2_para_sm — tabela verdade e simulação
 
-* **Circuito:** [`lib/c2_para_sm.bdf`](../../lib/c2_para_sm.bdf) (usa [`inversor5`](../../lib/inversor5.bdf) e [`mux2x1`](../../lib/mux2x1.bdf) ×5)
-* **Entrada:** `I[5..0]` em complemento a 2 (saída do `somador6`)
-* **Saída:** `O[5..0]` em sinal-magnitude: `O[5]` = sinal, `O[4..0]` = magnitude (até 30)
-* **Como funciona:** `O[5] = I[5]`. Se `I[5] = 0`, `O[4..0] = I[4..0]`; se `I[5] = 1`, `O[4..0]` = C2 de `I[4..0]` (`inversor5`). Os `mux2x1` usam `I[5]` como seletor.
-* **Simulação:** `c2_para_sm.vwf` (a criar)
+* **Circuito:** [`lib/c2_para_sm.bdf`](../../lib/c2_para_sm.bdf) ([`inversor5`](../../lib/inversor5.bdf), [`mux2x1`](../../lib/mux2x1.bdf) ×5)
+* **Entradas:** `I[5..0]` (complemento a 2, saída do `somador6`)
+* **Saídas:** `O[5..0]` (sinal-magnitude: `O[5]` = sinal)
+* **Figuras do relatório (nesta pasta):** `c2_para_sm_circuito.png` (esquemático) e `c2_para_sm_simulacao.png` (waveform do `c2_para_sm.vwf`)
 
-## Tabela verdade (casos de teste)
 
-| I[5..0] (C2) | I (dec) | O[5..0] (SM) | Sinal | Magnitude |
-|:---:|:---:|:---:|:---:|:---:|
-| `000000` | 0 |   |   |   |
-| `000111` | +7 |   |   |   |
-| `011110` | +30 |   |   |   |
-| `111111` | −1 |   |   |   |
-| `110001` | −15 |   |   |   |
-| `100010` | −30 |   |   |   |
+## Funcionamento
+
+Converte o resultado do `somador6` de volta para sinal-magnitude, que é o formato pedido para F. O sinal passa direto (`O[5] = I[5]`). Se o número é positivo, a magnitude são os 5 bits de baixo; se é negativo, é o complemento a 2 desses 5 bits (`inversor5`). Cinco `mux2x1` com seletor `I[5]` fazem a escolha. Na ULA só aparecem valores de −30 a +30; a entrada −32 (`100000`) não ocorre (X).
+
+## Tabela verdade
+
+| I[5..0] | Valor | O[5..0] | I[5..0] | Valor | O[5..0] |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 000000 | 0 | 000000 | 100000 | −32 | X |
+| 000001 | +1 | 000001 | 100001 | −31 | 111111 |
+| 000010 | +2 | 000010 | 100010 | −30 | 111110 |
+| 000011 | +3 | 000011 | 100011 | −29 | 111101 |
+| 000100 | +4 | 000100 | 100100 | −28 | 111100 |
+| 000101 | +5 | 000101 | 100101 | −27 | 111011 |
+| 000110 | +6 | 000110 | 100110 | −26 | 111010 |
+| 000111 | +7 | 000111 | 100111 | −25 | 111001 |
+| 001000 | +8 | 001000 | 101000 | −24 | 111000 |
+| 001001 | +9 | 001001 | 101001 | −23 | 110111 |
+| 001010 | +10 | 001010 | 101010 | −22 | 110110 |
+| 001011 | +11 | 001011 | 101011 | −21 | 110101 |
+| 001100 | +12 | 001100 | 101100 | −20 | 110100 |
+| 001101 | +13 | 001101 | 101101 | −19 | 110011 |
+| 001110 | +14 | 001110 | 101110 | −18 | 110010 |
+| 001111 | +15 | 001111 | 101111 | −17 | 110001 |
+| 010000 | +16 | 010000 | 110000 | −16 | 110000 |
+| 010001 | +17 | 010001 | 110001 | −15 | 101111 |
+| 010010 | +18 | 010010 | 110010 | −14 | 101110 |
+| 010011 | +19 | 010011 | 110011 | −13 | 101101 |
+| 010100 | +20 | 010100 | 110100 | −12 | 101100 |
+| 010101 | +21 | 010101 | 110101 | −11 | 101011 |
+| 010110 | +22 | 010110 | 110110 | −10 | 101010 |
+| 010111 | +23 | 010111 | 110111 | −9 | 101001 |
+| 011000 | +24 | 011000 | 111000 | −8 | 101000 |
+| 011001 | +25 | 011001 | 111001 | −7 | 100111 |
+| 011010 | +26 | 011010 | 111010 | −6 | 100110 |
+| 011011 | +27 | 011011 | 111011 | −5 | 100101 |
+| 011100 | +28 | 011100 | 111100 | −4 | 100100 |
+| 011101 | +29 | 011101 | 111101 | −3 | 100011 |
+| 011110 | +30 | 011110 | 111110 | −2 | 100010 |
+| 011111 | +31 | 011111 | 111111 | −1 | 100001 |
+
+## Equações
+
+* `O[5] = I[5]`
+* `O[k] = I[k]·I5' + inversor5(I[4..0])[k]·I5`, para `k` = 0 … 4
 
 ## Observações
-
