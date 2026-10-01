@@ -86,10 +86,16 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
   - [x] na biblioteca
   - [ ] conferir o zero negativo: `00000` × `10000` deve dar `1` (se não der: OR com "A = 0 e B = 0" na `ula`)
   - [ ] tabela verdade + simulação
-- [ ] 🔴 **`comparador_maior`**, sinal-magnitude, com +0 = −0
-  - [ ] criar: sinais diferentes → o positivo é maior; os dois positivos → \|A\| > \|B\|; os dois negativos → \|A\| < \|B\|
+- [ ] 🟡 **`comp_maior`**: A > B em sinal-magnitude, com +0 = −0 (`A[3..0]`, `SA`, `B[3..0]`, `SB` → `O`)
+  - [ ] 🟢 **`comp_mag`**: \|A\| > \|B\| em 4 bits (`A[3..0]`, `B[3..0]` → `O`)
+    - [x] na biblioteca
+    - [x] simulação (`testes/comp_mag/comp_mag.vwf`)
+    - [ ] tabela verdade
+  - [x] na biblioteca (usa `comp_mag` ×2: `comp_mag(A, B)` e `comp_mag(B, A)`)
+  - [ ] terminar a lógica do sinal (em andamento): sinais diferentes → o positivo é maior; os dois positivos → \|A\| > \|B\| (`comp_mag(A, B)`); os dois negativos → \|A\| < \|B\| (`comp_mag(B, A)`)
   - [ ] tabela verdade + simulação
-  - [ ] 🔌 na `ula`: `GT = comparador_maior(A, B)` e `LT = comparador_maior(B, A)` (não precisa de `comparador_menor`)
+  - [ ] gerar `lib/comp_maior.bsf`
+  - [ ] 🔌 na `ula`: `GT = comp_maior(A, B)` e `LT = comp_maior(B, A)` (não precisa de `comparador_menor`)
 - [ ] 🟢 **`decodificador_comparadores`**: `S` → seleção do `mux_comparadores`
   - [x] na biblioteca
   - [ ] tabela verdade + simulação
@@ -174,7 +180,7 @@ Os decodificadores vão direto do binário para os segmentos, sem passar por BCD
 - **Soma/subtração:** via `comp2` (sinal-magnitude → C2 → soma → volta para sinal-magnitude).
 - **Volta para sinal-magnitude:** `inversor5` + `mux2x1`, no mesmo padrão do `comp2`.
 - **Operação `010`:** F em 6 bits = `{OS, OS, O[3..0]}` (saídas do `comp2`).
-- **`A < B`:** segunda instância do `comparador_maior` com A e B trocados.
+- **`A < B`:** segunda instância do `comp_maior` com A e B trocados.
 - **Displays:** decodificadores binário → 7 segmentos do grupo, sem BCD.
 
 ## Em aberto
