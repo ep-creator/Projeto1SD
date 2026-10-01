@@ -116,6 +116,7 @@ Projeto1SD/
 | `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
 | `somador_completo` | aritmética | Somador completo de 1 bit | — | — |
 | `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | — |
+| `somador_subtrator` | aritmética | A ± B a partir de sinal-magnitude (`sinal_a`, `W[3..0]`, `sinal_b`, `X[3..0]`, `sinal_op` → `R[5..0]`) | `comp2`, `somador6` | saída ainda em C2 (falta `c2_para_sm`); falta `.bsf` |
 | `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
 | `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
 | `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | valor 9 |
@@ -223,8 +224,8 @@ set_global_assignment -name SEARCH_PATH ../../lib
   * `op_and` e `op_xor`: `F[4]` e `F[5]` trocados (o sinal sai em `F[4]` e o GND em `F[5]`).
   * `decod7seg_ab_unidade`: o 9 (`1001`) aparece como 5 — a AND4 de entradas A, B', C', D ainda está na OR4 de `bu_seg` (o commit `9b892ca` só redesenhou os fios).
   * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-* **Blocos que faltam:** `inversor5`, `c2_para_sm`, `somador_subtrator`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
+* **Blocos que faltam:** `inversor5`, `c2_para_sm`, `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
+* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f`, do `comp_maior` e do `somador_subtrator` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
 
 ---
 

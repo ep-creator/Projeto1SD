@@ -3,7 +3,7 @@
 Lista de tudo que a ULA precisa, bloco por bloco. Marque `[x]` quando o item estiver pronto (no VS Code ou direto no GitHub).
 Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
-> **Próximo passo:** `inversor5` → `c2_para_sm` → `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
+> **Próximo passo:** `inversor5` → `c2_para_sm` → ligar o `c2_para_sm` na saída do `somador_subtrator` (item 1). Pendente fora dessa sequência: corrigir o dígito 9 do `decod7seg_ab_unidade` (item 7).
 
 **Etiquetas:** 🟢 já existe e serve · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação (portas/fios dentro do bloco pai, sem bloco próprio)
 
@@ -37,13 +37,16 @@ toplevel ─────────────────── chaves, LEDs 
 
 Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta para sinal-magnitude.
 
-- [ ] 🔴 **`somador_subtrator`**: bloco que junta os itens abaixo (`SUB = S[0]`)
+- [ ] 🟡 **`somador_subtrator`**: bloco que junta os itens abaixo (`SUB = S[0]`)
+  - [x] na biblioteca (enviado pelo grupo como `src/Projeto1SD.bdf`): `sinal_a`, `W[3..0]`, `sinal_b`, `X[3..0]`, `sinal_op` → `R[5..0]`
+  - [ ] hoje a saída `R[5..0]` ainda está em C2: falta o `c2_para_sm` no fim
+  - [ ] gerar `lib/somador_subtrator.bsf`
   - [ ] 🟢 **`comp2`** ×2 (A e B), sinal-magnitude → C2 (`I[3..0]`, `IS` → `O[3..0]`, `OS`)
     - [x] na biblioteca
     - [x] corrigir o zero negativo: `−0` agora sai `+0` (bloco do Enzo)
     - [x] simulação (`testes/comp2/comp2.vwf`)
     - [ ] tabela verdade
-  - [ ] 🔌 inverter o sinal de B na subtração: `SB' = SB XOR SUB`
+  - [x] 🔌 inverter o sinal de B na subtração: `SB' = SB XOR SUB` (`sinal_b XOR sinal_op`)
   - [ ] 🟢 **`somador_completo`**, 1 bit (`A`, `B`, `Cin` → `S`, `Cout`)
     - [x] na biblioteca (enviado pelo grupo como `soma1`)
     - [x] funcionando: compilado e simulado dentro do `somador6`
@@ -56,7 +59,7 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
     - [ ] 🔴 **`inversor5`**: C2 de 5 bits (o `inversor` atual só tem 4, e a magnitude chega a 30)
     - [ ] 🟢 `mux2x1` ×5: escolhe entre o valor direto e o invertido, com seletor = bit de sinal
     - [ ] tabela verdade + simulação
-  - [ ] tabela verdade + simulação do `somador_subtrator`: +5+(−3), (−9)−(+12), (−8)+(−8), (−15)+(−15), (+7)−(+7), (−0)+(+0)
+  - [ ] tabela verdade + simulação do `somador_subtrator` (veio uma simulação junto, com a saída ainda em C2): +5+(−3), (−9)−(+12), (−8)+(−8), (−15)+(−15), (+7)−(+7), (−0)+(+0)
 
 ---
 
