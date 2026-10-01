@@ -1,0 +1,12 @@
+# Projeto de teste do bloco 'c2_para_sm'
+# O circuito NAO fica aqui: ele esta na biblioteca, em lib/c2_para_sm.bdf
+# Editar o bloco por este projeto altera o arquivo da biblioteca.
+# Esta pasta guarda so o que e do teste: projeto, tabela verdade e simulacao (c2_para_sm.vwf)
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY c2_para_sm
+set_global_assignment -name BDF_FILE ../../lib/c2_para_sm.bdf
+set_global_assignment -name SEARCH_PATH ../../lib
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"

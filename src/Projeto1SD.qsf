@@ -1,0 +1,8 @@
+# Projeto de montagem final (top-level + pinagem da DE2-115)
+# Usa os blocos da biblioteca (../lib) sem copiar nenhum arquivo.
+# O esquematico toplevel.bdf fica nesta pasta; a pinagem e adicionada na branch feat/toplevel-pinagem.
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY toplevel
+set_global_assignment -name SEARCH_PATH ../lib
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
