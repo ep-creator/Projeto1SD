@@ -3,29 +3,30 @@
 Lista de tudo que a ULA precisa, bloco por bloco. Marque `[x]` quando o item estiver pronto (no VS Code ou direto no GitHub).
 Um bloco está **concluído** quando todos os subitens dele estão marcados.
 
-> **Próximo passo:** montar `src/toplevel.bdf` com os blocos da `lib/` (item 8), compilar, fazer a pinagem e testar na placa.
+> **Situação (01/10/2026):** versão final. Toplevel montado, pinagem aplicada e sistema **testado na DE2-115, funcionando**. Integrado na `main`.
 
 **Etiquetas:** 🟢 pronto (compilado e simulado com todas as entradas) · 🟡 existe, mas precisa alterar · 🔴 falta criar · 🔌 só ligação
 
-## 📋 O que falta (resumo em 01/10)
+## 📋 O que falta
 
-**Montar e testar na placa**
-- [ ] `src/toplevel.bdf`: `ula` + displays + LEDs (ligações no item 8)
-- [ ] Pinagem da DE2-115 em `src/Projeto1SD.qsf`
-- [ ] Compilação completa (`src/Projeto1SD.qpf`) e gravação na placa
-- [ ] Teste na placa com os casos do item 6
+**Placa**
+- [x] `src/toplevel.bdf`: `ula` + displays + LEDs + sinal de F no HEX2
+- [x] Pinagem da DE2-115 em `src/Projeto1SD.qsf` (92 pinos)
+- [x] Compilação completa e gravação na placa
+- [x] Teste na placa
 
 **Relatório**
 - [ ] Preencher as tabelas verdade (`testes/<bloco>/tabela_verdade.md`)
-- [ ] Simulações `.vwf` no Quartus para o relatório (a `ula` e os blocos principais); refazer `op_and.vwf`, `op_xor.vwf` e `somador_subtrator.vwf` (gravadas antes das correções)
+- [ ] Simulações `.vwf` para o relatório (a `ula` e os blocos principais); refazer `op_and.vwf`, `op_xor.vwf` e `somador_subtrator.vwf` (gravadas antes das correções)
 
 **Git**
-- [x] Merge da `feat/biblioteca` na `develop` (01/10)
+- [x] Merge da `feat/biblioteca` na `develop`
+- [x] Merge da `feat/toplevel` na `develop` e da `develop` na `main`
 
 ## Visão geral
 
 ```text
-toplevel ─────────────────── chaves, LEDs e displays da DE2-115
+toplevel ─────────────────── chaves, LEDs e displays da DE2-115 (src/toplevel.bdf)
 ├── ula ──────────────────── A[4..0], B[4..0], S[2..0] → F[5..0], STATUS, DISP_EN
 │   ├── somador_subtrator ── 000 / 001  (comp2 ×2 → somador6 → c2_para_sm)
 │   ├── comp2 ────────────── 010
@@ -46,7 +47,7 @@ Todos os blocos abaixo da `ula` e dos displays estão em `lib/`, compilados no Q
 - [x] Validar no Quartus: montagem em `src/` e edição de um bloco valendo para todos
 - [x] Validar no Quartus: criar um bloco novo pelo *New Project Wizard* (ponto 4, feito com o `somador6`; o Wizard não grava o `SEARCH_PATH`, conferir o `.qsf`)
 - [x] Merge da `feat/biblioteca` na `develop` (01/10)
-- [ ] Trazer a `develop` para as branches `feat/*` antigas (`git merge develop`)
+- [x] Branches antigas removidas (ficam só `main` e `develop`)
 
 ---
 
@@ -119,11 +120,11 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
 
 ## 8. Top-level e placa
 
-- [ ] 🔴 **`src/toplevel.bdf`** com as ligações abaixo
-- [ ] 🔴 Pinagem em `src/Projeto1SD.qsf` (Pin Planner ou *Assignments > Import Assignments*)
-- [ ] Compilação completa sem erros
-- [ ] Simulação do sistema completo (`src/toplevel.vwf`)
-- [ ] Teste na placa → merge na `main`
+- [x] 🟢 **`src/toplevel.bdf`** com as ligações abaixo
+- [x] 🟢 Pinagem em `src/Projeto1SD.qsf` (`src/pinagem_de2_115.tcl` + HEX2)
+- [x] Compilação completa sem erros
+- [ ] Simulação do sistema completo (`src/toplevel.vwf`) para o relatório
+- [x] Teste na placa → merge na `main`
 
 **Ligações do toplevel** (todos os blocos vêm de `lib/`; no `src/Projeto1SD.qsf` já tem `SEARCH_PATH ../lib`):
 
@@ -141,7 +142,8 @@ Caminho: A e B em sinal-magnitude → `comp2` → soma em C2 de 6 bits → volta
 | `ula.F[4..0]`, `ula.F[5]` | `decod7seg_f.S[4..0]`, `sinal_S` | |
 | `decod7seg_f` `aDEZ..gDEZ` | `apaga_display.I[0..6]` → `HEX1[0..6]` | `EN = ula.DISP_EN` |
 | `decod7seg_f` `aUNI..gUNI` | `apaga_display.I[0..6]` → `HEX0[0..6]` | `EN = ula.DISP_EN` |
-| `VCC` | `HEX3[6..0]`, `HEX2[6..0]` | displays não usados, apagados |
+| `NAND(F[5], DISP_EN)` | `HEX2[6]` | "−" quando F é negativo (só em 000/001); `HEX2[5..0]` em VCC |
+| — | `HEX3` | não usado (fica apagado) |
 
 ---
 
