@@ -100,33 +100,37 @@ Projeto1SD/
 
 ### 📚 Catálogo da biblioteca
 
-| Bloco | Categoria | Função | Usa | Pendência |
+| Bloco | Categoria | Função | Usa | Situação |
 | :--- | :--- | :--- | :--- | :--- |
-| `mux2x1` | comum | MUX 2:1 de 1 bit | — | — |
-| `mux4x1` | comum | MUX 4:1 de 1 bit | — | — |
-| `inversor` | c2 | C2 de 4 bits (inverte e soma 1) | — | — |
-| `inversor5` | c2 | C2 de 5 bits (`I[4..0]` → `O[4..0]`) | — | não testado |
-| `comp2` | c2 | Sinal/magnitude → C2 condicional (`I[3..0]`, `IS` → `O[3..0]`, `OS`) | `inversor`, `mux2x1` | — |
-| `op_and` | lógica | AND bit a bit | — | — |
-| `op_xor` | lógica | XOR bit a bit | — | — |
-| `comparador_igual` | comparadores | $A = B$ | — | — |
-| `comp_mag` | comparadores | \|A\| > \|B\| em 4 bits (`A[3..0]`, `B[3..0]` → `O`) | — | — |
-| `comp_maior` | comparadores | A > B em sinal-magnitude (`A[3..0]`, `SA`, `B[3..0]`, `SB` → `O`) | `comp_mag` | lógica do sinal em andamento; falta `.bsf` |
-| `mux_comparadores` | comparadores | Escolhe EQ/GT/LT para o `STATUS` | — | — |
-| `decodificador_comparadores` | decodificadores | `S` → bits de seleção dos comparadores (`F1`, `F2`) | — | — |
-| `mux_saida` | seleção | MUX 4:1 de 6 bits | `mux4x1` | entradas de 1 bit; falta `.bsf` |
-| `somador_completo` | aritmética | Somador completo de 1 bit | — | — |
-| `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | — |
-| `c2_para_sm` | aritmética | C2 de 6 bits → sinal-magnitude (`I[5..0]` → `O[5..0]`, `O[5]` = sinal) | `inversor5`, `mux2x1` | não testado |
-| `somador_subtrator` | aritmética | A ± B a partir de sinal-magnitude (`sinal_a`, `W[3..0]`, `sinal_b`, `X[3..0]`, `sinal_op` → `R[5..0]`) | `comp2`, `somador6` | saída ainda em C2 (falta `c2_para_sm`); falta `.bsf` |
-| `decodificador_saida` | decodificadores | `S` → seletor do `mux_saida` (`F1`, `F2`) | — | — |
-| `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena em 7 segmentos | — | — |
-| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade em 7 segmentos | — | valor 9 |
-| `decod7seg_f_dezena` | display | Magnitude 0–30 → dezena em 7 segmentos | — | — |
-| `decod7seg_f_unidade` | display | Magnitude 0–30 → unidade em 7 segmentos | — | simulação só com `gUNI` |
-| `decod7seg_f` | display | \|F\| nos dois displays (`S[4..0]`, `sinal_S` → segmentos DEZ/UNI, `led_negativo`) | `decod7seg_f_dezena`, `decod7seg_f_unidade` | falta `.bsf` |
+| `mux2x1` | comum | MUX 2:1 de 1 bit (`S = 0` → `A`, `S = 1` → `B`) | — | ✅ |
+| `mux4x1` | comum | MUX 4:1 de 1 bit (`I[3..0]`, `S[1..0]` → `yi`) | — | ✅ |
+| `inversor` | c2 | C2 de 4 bits (`I0..I3` → `F0..F3`) | — | ✅ |
+| `inversor5` | c2 | C2 de 5 bits (`I[4..0]` → `O[4..0]`) | — | ✅ |
+| `comp2` | c2 | Sinal-magnitude → C2 de 5 bits (`I[3..0]`, `IS` → `O[3..0]`, `OS`); `−0` sai `+0` | `inversor`, `mux2x1` | ✅ |
+| `op_and` | lógica | AND bit a bit (`A[3..0]`, `SA`, `B[3..0]`, `SB` → `F[5..0]`; `F[5]` = `SA AND SB`, `F[4]` = 0) | — | ✅ |
+| `op_xor` | lógica | XOR bit a bit (mesmos pinos; `F[5]` = `SA XOR SB`, `F[4]` = 0) | — | ✅ |
+| `comparador_igual` | comparadores | A = B em sinal-magnitude, com +0 = −0 (`A[4..0]`, `B[4..0]` → `F`) | — | ✅ |
+| `comp_mag` | comparadores | \|A\| > \|B\| em 4 bits (`A[3..0]`, `B[3..0]` → `O`) | — | ✅ |
+| `comp_maior` | comparadores | A > B em sinal-magnitude, com +0 = −0 (`A[3..0]`, `SA`, `B[3..0]`, `SB` → `O`) | `comp_mag` | ✅ |
+| `decodificador_comparadores` | decodificadores | `S3 S2 S1` (= `S[2..0]`) → `F1`, `F2` (seleção do `mux_comparadores`) | — | ✅ |
+| `mux_comparadores` | comparadores | Escolhe EQ (011), GT (100) ou LT (101) para o `STATUS`; 0 nas outras operações | — | ✅ |
+| `somador_completo` | aritmética | Somador completo de 1 bit | — | ✅ |
+| `somador6` | aritmética | Soma em C2: 5 + 5 bits → 6 bits (`A[4..0]`, `B[4..0]` → `O[5..0]`) | `somador_completo` | ✅ |
+| `c2_para_sm` | aritmética | C2 de 6 bits → sinal-magnitude (`I[5..0]` → `O[5..0]`, `O[5]` = sinal) | `inversor5`, `mux2x1` | ✅ |
+| `somador_subtrator` | aritmética | A ± B em sinal-magnitude (`sinal_a`, `W[3..0]`, `sinal_b`, `X[3..0]`, `sinal_op` → `R[5..0]`, `R[5]` = sinal) | `comp2`, `somador6`, `c2_para_sm` | ✅ |
+| `decodificador_saida` | decodificadores | `S3 S2 S1` → `F1`, `F2` (seletor do `mux_saida`: `F1` → `S[1]`, `F2` → `S[0]`) | — | ✅ |
+| `mux_saida` | seleção | MUX 4:1 de 6 bits (`SOMA_OU_SUB`, `Comp2B`, `OP_AND`, `OP_XOR` `[5..0]`, `S[1..0]` → `F[5..0]`) | `mux4x1` | ✅ |
+| `ula` | integração | A ULA inteira (`A[4..0]`, `B[4..0]`, `S[2..0]` → `F[5..0]`, `STATUS`, `DISP_EN`) | todos acima | ✅ |
+| `decod7seg_ab_dezena` | display | Magnitude 0–15 → dezena (`A` = bit mais significativo, `D` = menos) | — | ✅ |
+| `decod7seg_ab_unidade` | display | Magnitude 0–15 → unidade (`A` = bit mais significativo) | — | ✅ |
+| `decod7seg_f_dezena` | display | Magnitude 0–30 → dezena (`R4` = bit mais significativo) | — | ✅ |
+| `decod7seg_f_unidade` | display | Magnitude 0–30 → unidade | — | ✅ |
+| `decod7seg_f` | display | \|F\| nos dois displays (`S[4..0]`, `sinal_S` → segmentos DEZ/UNI, `led_negativo`) | `decod7seg_f_dezena`, `decod7seg_f_unidade` | ✅ |
+| `apaga_display` | display | Apaga os 7 segmentos quando `EN = 0` (`I[6..0]`, `EN` → `O[6..0]`; índice 0 = segmento a) | — | ✅ |
 
-Detalhes das pendências em [⏳ Pendências](#-pendências-depois-dos-testes). O andamento bloco a bloco está no [CHECKLIST.md](CHECKLIST.md).
+✅ = compilado no Quartus (Analysis & Synthesis sem erros) e simulado com todas as combinações de entrada contra a especificação (ver [Verificação](#-verificação)). Displays: segmentos ativos em nível baixo; a dezena mostra `0` abaixo de 10.
+
+Detalhes das pendências em [⏳ Pendências](#-pendências). O andamento bloco a bloco está no [CHECKLIST.md](CHECKLIST.md).
 
 | Categoria | Branch responsável |
 | :--- | :--- |
@@ -216,17 +220,25 @@ set_global_assignment -name SEARCH_PATH ../../lib
 
 ## ✅ Decisões Tomadas
 
-* **Zero negativo:** `+0` (`00000`) e `−0` (`10000`) são **iguais**. Blocos a conferir: `comparador_igual` (deve dar `1` para `00000` × `10000`), comparadores `>`/`<` (nenhum dos dois ativa nesse caso) e `comp2` (antes convertia `−0` em `10000`, que em C2 vale −16).
-* **Operação `010` (C2 de B):** F mostra o resultado obtido pelo bloco `comp2`: se B é positivo, sai igual a B; se B é negativo, sai o complemento a 2.
+* **Zero negativo:** `+0` (`00000`) e `−0` (`10000`) são **iguais**: `comparador_igual` dá 1, `comp_maior` dá 0 nos dois sentidos, e o `comp2`/`somador_subtrator` tratam −0 como +0.
+* **Operação `010` (C2 de B):** F mostra o resultado obtido pelo bloco `comp2`: se B é positivo, sai igual a B; se B é negativo, sai o complemento a 2, estendido para 6 bits (`F = {OS, OS, O[3..0]}`).
+* **Comparações (`011`, `100`, `101`):** só o `STATUS` vale; F sai `000000`.
+* **Displays de F:** acesos só em `000` e `001` (`DISP_EN = S[2]'·S[1]'`, saída da `ula`), apagados pelo `apaga_display`.
 
-## ⏳ Pendências (depois dos testes)
+## ⏳ Pendências
 
-* **Interfaces fora da convenção:** ficam como estão até a integração funcionar; depois são padronizadas. Casos atuais: `op_and`/`op_xor` (`A[3..0]` + `SA`, saídas `F[0]`…`F[5]` soltas), `decodificador_comparadores` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`, convenção seria `EQ`) e `inversor` (`I0..I3` → `F0..F3`).
-* **Defeitos conhecidos (lógica dos autores, a revisar na integração):**
-  * `decod7seg_ab_unidade`: o 9 (`1001`) aparece como 5 — a AND4 de entradas A, B', C', D ainda está na OR4 de `bu_seg` (o commit `9b892ca` só redesenhou os fios).
-  * `mux_saida`: as entradas `SOMA_OU_SUB`, `Comp2B`, `AND` e `XOR` são de 1 bit e ligadas aos 6 MUX, então as 6 saídas ficam iguais; precisam ser barramentos `[5..0]`.
-* **Blocos que faltam:** `apaga_display`, `ula`; top-level e pinagem. Lista completa em [CHECKLIST.md](CHECKLIST.md).
-* **Arquivos a gerar no Quartus:** waveforms de `mux2x1`, `inversor`, `inversor5`, `c2_para_sm`, `mux4x1`, `mux_saida` e `decod7seg_f`; `.bsf` do `decod7seg_f`, do `comp_maior` e do `somador_subtrator` (abrir `testes/<bloco>/<bloco>.qpf` e gerar em `lib/`).
+* **Falta montar:** `src/toplevel.bdf` (ULA + displays + LEDs) e a pinagem da DE2-115 em `src/Projeto1SD.qsf`. Todos os blocos já estão em `lib/`; as ligações estão no item 8 do [CHECKLIST.md](CHECKLIST.md).
+* **Interfaces fora da convenção (funcionam; padronizar depois, se der tempo):** `decodificador_comparadores`/`decodificador_saida` (`S3, S2, S1` → `F1, F2`), `comparador_igual` (saída `F`), `inversor` (`I0..I3` → `F0..F3`), `somador_subtrator` (`W`, `X`, `sinal_*`), displays com entradas soltas (`A..D`, `R4..R0`).
+* **Arquivos para o relatório:** tabelas verdade (`testes/<bloco>/tabela_verdade.md`) e simulações `.vwf` no Quartus; `op_and.vwf` e `op_xor.vwf` são de antes da correção.
+
+## 🔬 Verificação
+
+Os blocos foram conferidos em 01/10/2026 no Quartus Prime 25.1 Lite:
+
+1. **Compilação:** *Analysis & Synthesis* de cada `testes/<bloco>/<bloco>.qpf` (0 erros).
+2. **Simulação:** o Quartus converte cada `.bdf` para Verilog (`quartus_map --convert_bdf_to_verilog`) e um testbench aplica **todas** as combinações de entrada e compara com o que a especificação pede (soma/subtração em sinal-magnitude, comparações com +0 = −0, dígitos dos displays etc.). A `ula` foi testada nas 8192 combinações de A, B e S.
+
+Os scripts estão em [`ferramentas/verificacao/`](ferramentas/verificacao/).
 
 ---
 

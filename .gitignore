@@ -24,3 +24,6 @@ simulation/
 .vscode/
 Thumbs.db
 desktop.ini
+
+# ---- Saida da verificacao (ferramentas/verificacao) ----
+ferramentas/verificacao/saida/
