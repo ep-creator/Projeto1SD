@@ -20,7 +20,7 @@ Um bloco está **concluído** quando todos os subitens dele estão marcados.
 - [ ] Simulações `.vwf` no Quartus para o relatório (a `ula` e os blocos principais); refazer `op_and.vwf`, `op_xor.vwf` e `somador_subtrator.vwf` (gravadas antes das correções)
 
 **Git**
-- [ ] Merge da `feat/biblioteca` na `develop`
+- [x] Merge da `feat/biblioteca` na `develop` (01/10)
 
 ## Visão geral
 
@@ -45,7 +45,7 @@ Todos os blocos abaixo da `ula` e dos displays estão em `lib/`, compilados no Q
 - [x] Validar no Quartus: projeto de teste acha os blocos em `lib/`
 - [x] Validar no Quartus: montagem em `src/` e edição de um bloco valendo para todos
 - [x] Validar no Quartus: criar um bloco novo pelo *New Project Wizard* (ponto 4, feito com o `somador6`; o Wizard não grava o `SEARCH_PATH`, conferir o `.qsf`)
-- [ ] Merge da `feat/biblioteca` na `develop`
+- [x] Merge da `feat/biblioteca` na `develop` (01/10)
 - [ ] Trazer a `develop` para as branches `feat/*` antigas (`git merge develop`)
 
 ---
